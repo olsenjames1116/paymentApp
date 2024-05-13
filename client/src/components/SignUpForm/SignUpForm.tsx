@@ -1,4 +1,5 @@
 import ConfirmPasswordInput from '../ConfirmPasswordInput/ConfirmPasswordInput';
+import FormSubmitButton from '../FormSubmitButton/FormSubmitButton';
 import PasswordInput from '../PasswordInput/PasswordInput';
 import UsernameInput from '../UsernameInput/UsernameInput';
 
@@ -8,6 +9,7 @@ function SignUpForm() {
 			<UsernameInput />
 			<PasswordInput />
 			<ConfirmPasswordInput />
+			<FormSubmitButton text="Sign Up" />
 		</form>
 	);
 }
