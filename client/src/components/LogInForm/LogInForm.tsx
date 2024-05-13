@@ -8,6 +8,7 @@ function LogInForm() {
 		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
 	) => {
 		event.preventDefault();
+		console.log('log in');
 	};
 
 	const updateInputInState = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,6 +1,14 @@
 import { Link } from 'react-router-dom';
+import DemoAccountLogIn from '../DemoAccountLogIn/DemoAccountLogIn';
 
 function LogInOptions() {
+	const logInDemoAccount = (
+		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+	) => {
+		event.preventDefault();
+		console.log('demo');
+	};
+
 	return (
 		<ul data-testid="log-in-options">
 			<li>
@@ -8,7 +16,9 @@ function LogInOptions() {
 					Sign Up
 				</Link>
 			</li>
-			<li></li>
+			<li>
+				<DemoAccountLogIn handleClick={logInDemoAccount} />
+			</li>
 		</ul>
 	);
 }

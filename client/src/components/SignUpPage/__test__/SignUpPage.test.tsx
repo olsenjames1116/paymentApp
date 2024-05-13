@@ -1,10 +1,19 @@
 import SignUpPage from '../SignUpPage';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { BrowserRouter } from 'react-router-dom';
+
+const MockSignUpPage = () => {
+	return (
+		<BrowserRouter>
+			<SignUpPage />
+		</BrowserRouter>
+	);
+};
 
 describe('SignUpPage', () => {
 	it('should render component.', () => {
-		render(<SignUpPage />);
+		render(<MockSignUpPage />);
 		const signUpPage = screen.getByTestId('sign-up-page');
 
 		expect(signUpPage).toBeInTheDocument();
