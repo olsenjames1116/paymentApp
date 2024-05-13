@@ -5,7 +5,7 @@ interface DemoAccountLogInProps {
 function DemoAccountLogIn({ handleClick }: DemoAccountLogInProps) {
 	return (
 		<button
-			className="btn-outline-primary"
+			className="btn btn-outline-primary"
 			onClick={(event) => handleClick(event)}
 			data-testid="demo-account-log-in"
 		>

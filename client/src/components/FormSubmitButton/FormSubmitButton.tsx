@@ -7,7 +7,7 @@ function FormSubmitButton({ text, handleClick }: FormSubmitButton) {
 	return (
 		<button
 			data-testid="form-submit-button"
-			className="btn-primary"
+			className="btn btn-primary"
 			onClick={(event) => handleClick(event)}
 		>
 			{text}

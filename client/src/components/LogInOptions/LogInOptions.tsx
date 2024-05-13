@@ -12,7 +12,7 @@ function LogInOptions() {
 	return (
 		<ul data-testid="log-in-options">
 			<li>
-				<Link to="/sign-up" className="btn-link btn-outline-primary">
+				<Link to="/sign-up" className="btn btn-outline-primary">
 					Sign Up
 				</Link>
 			</li>
