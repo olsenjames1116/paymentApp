@@ -8,13 +8,27 @@ function LogInForm() {
 		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
 	) => {
 		event.preventDefault();
-		console.log('log in');
+	};
+
+	const updateInputInState = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const { id, value } = event.target;
+
+		switch (id) {
+			case 'username':
+				console.log(value);
+				break;
+			case 'password':
+				console.log(value);
+				break;
+			default:
+				console.log('None of the input ids matched.');
+		}
 	};
 
 	return (
 		<form data-testid="log-in-form" noValidate className="col">
-			<UsernameInput />
-			<PasswordInput />
+			<UsernameInput handleChange={updateInputInState} />
+			<PasswordInput handleChange={updateInputInState} />
 			<FormSubmitButton text="Log In" handleClick={validateInput} />
 		</form>
 	);
