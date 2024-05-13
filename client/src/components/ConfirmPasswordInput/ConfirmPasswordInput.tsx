@@ -1,4 +1,8 @@
-function ConfirmPasswordInput() {
+interface ConfirmPasswordInputProps {
+	handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+function ConfirmPasswordInput({ handleChange }: ConfirmPasswordInputProps) {
 	return (
 		<div
 			className="form-floating"
@@ -11,6 +15,9 @@ function ConfirmPasswordInput() {
 				data-testid="confirm-password-input"
 				placeholder=""
 				className="form-control"
+				onChange={(event) => handleChange(event)}
+				maxLength={50}
+				required
 			/>
 			<label htmlFor="confirmPassword">Confirm Password</label>
 		</div>

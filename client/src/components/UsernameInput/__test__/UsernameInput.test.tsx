@@ -14,7 +14,7 @@ describe('UsernameInput', () => {
 		expect(usernameInputContainer).toBeInTheDocument();
 	});
 
-	it('should render component.', async () => {
+	it('should call handleChange when input is typed in.', async () => {
 		const mockHandleChange = vi.fn();
 		render(<UsernameInput handleChange={mockHandleChange} />);
 		const usernameInput = screen.getByTestId('username-input');

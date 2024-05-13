@@ -21,6 +21,9 @@ function SignUpForm() {
 			case 'password':
 				console.log(value);
 				break;
+			case 'confirmPassword':
+				console.log(value);
+				break;
 			default:
 				console.log('None of the input ids matched.');
 		}
@@ -30,7 +33,7 @@ function SignUpForm() {
 		<form data-testid="sign-up-form" noValidate>
 			<UsernameInput handleChange={updateInputInState} />
 			<PasswordInput handleChange={updateInputInState} />
-			<ConfirmPasswordInput />
+			<ConfirmPasswordInput handleChange={updateInputInState} />
 			<FormSubmitButton text="Sign Up" handleClick={validateInput} />
 		</form>
 	);

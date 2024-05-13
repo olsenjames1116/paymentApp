@@ -14,7 +14,7 @@ describe('PasswordInput', () => {
 		expect(passwordInputContainer).toBeInTheDocument();
 	});
 
-	it('should render component.', async () => {
+	it('should call handleChange when input is typed in.', async () => {
 		const mockHandleChange = vi.fn();
 		render(<PasswordInput handleChange={mockHandleChange} />);
 		const passwordInput = screen.getByTestId('password-input');
