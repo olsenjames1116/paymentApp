@@ -1,7 +1,7 @@
 import AccountFormContainer from '../AccountFormContainer/AccountFormContainer';
 import SignUpForm from '../SignUpForm/SignUpForm';
 
-function SignUpPageContent() {
+function SignUpContent() {
 	return (
 		<main data-testid="sign-up-content">
 			<AccountFormContainer>
@@ -11,4 +11,4 @@ function SignUpPageContent() {
 	);
 }
 
-export default SignUpPageContent;
+export default SignUpContent;

@@ -11,10 +11,25 @@ function SignUpForm() {
 		console.log('sign up');
 	};
 
+	const updateInputInState = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const { id, value } = event.target;
+
+		switch (id) {
+			case 'username':
+				console.log(value);
+				break;
+			case 'password':
+				console.log(value);
+				break;
+			default:
+				console.log('None of the input ids matched.');
+		}
+	};
+
 	return (
 		<form data-testid="sign-up-form" noValidate>
-			<UsernameInput />
-			<PasswordInput />
+			<UsernameInput handleChange={updateInputInState} />
+			<PasswordInput handleChange={updateInputInState} />
 			<ConfirmPasswordInput />
 			<FormSubmitButton text="Sign Up" handleClick={validateInput} />
 		</form>
