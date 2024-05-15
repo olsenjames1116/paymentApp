@@ -1,9 +1,13 @@
+import { useDispatch } from 'react-redux';
+import { storeUsername } from '../../redux/state/usernameSlice';
 import ConfirmPasswordInput from '../ConfirmPasswordInput/ConfirmPasswordInput';
 import FormSubmitButton from '../FormSubmitButton/FormSubmitButton';
 import PasswordInput from '../PasswordInput/PasswordInput';
 import UsernameInput from '../UsernameInput/UsernameInput';
 
 function SignUpForm() {
+	const dispatch = useDispatch();
+
 	const validateInput = (
 		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
 	) => {
@@ -16,7 +20,7 @@ function SignUpForm() {
 
 		switch (id) {
 			case 'username':
-				console.log(value);
+				dispatch(storeUsername(value));
 				break;
 			case 'password':
 				console.log(value);
