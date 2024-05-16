@@ -1,8 +1,12 @@
 interface ConfirmPasswordInputProps {
 	handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	confirmPasswordRef: React.RefObject<HTMLInputElement>;
 }
 
-function ConfirmPasswordInput({ handleChange }: ConfirmPasswordInputProps) {
+function ConfirmPasswordInput({
+	handleChange,
+	confirmPasswordRef,
+}: ConfirmPasswordInputProps) {
 	return (
 		<div
 			className="form-floating"
@@ -16,6 +20,7 @@ function ConfirmPasswordInput({ handleChange }: ConfirmPasswordInputProps) {
 				placeholder=""
 				className="form-control"
 				onChange={(event) => handleChange(event)}
+				ref={confirmPasswordRef}
 				maxLength={50}
 				required
 			/>

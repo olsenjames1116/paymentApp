@@ -1,15 +1,10 @@
 interface FormSubmitButton {
 	text: string;
-	handleClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-function FormSubmitButton({ text, handleClick }: FormSubmitButton) {
+function FormSubmitButton({ text }: FormSubmitButton) {
 	return (
-		<button
-			data-testid="form-submit-button"
-			className="btn btn-primary"
-			onClick={(event) => handleClick(event)}
-		>
+		<button data-testid="form-submit-button" className="btn btn-primary">
 			{text}
 		</button>
 	);

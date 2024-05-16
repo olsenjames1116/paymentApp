@@ -19,11 +19,9 @@ function LogInForm() {
 
 	useEffect(() => {
 		clearInputs();
-	});
+	}, []);
 
-	const validateInput = (
-		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-	) => {
+	const validateInput = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		console.log('log in');
 	};
@@ -44,10 +42,15 @@ function LogInForm() {
 	};
 
 	return (
-		<form data-testid="log-in-form" noValidate className="col">
+		<form
+			data-testid="log-in-form"
+			noValidate
+			className="col"
+			onSubmit={(event) => validateInput(event)}
+		>
 			<UsernameInput handleChange={updateInputInState} />
 			<PasswordInput handleChange={updateInputInState} />
-			<FormSubmitButton text="Log In" handleClick={validateInput} />
+			<FormSubmitButton text="Log In" />
 		</form>
 	);
 }

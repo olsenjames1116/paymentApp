@@ -1,8 +1,9 @@
 interface PasswordInputProps {
 	handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	passwordRef: React.RefObject<HTMLInputElement>;
 }
 
-function PasswordInput({ handleChange }: PasswordInputProps) {
+function PasswordInput({ handleChange, passwordRef }: PasswordInputProps) {
 	return (
 		<div className="form-floating" data-testid="password-input-container">
 			<input
@@ -13,6 +14,7 @@ function PasswordInput({ handleChange }: PasswordInputProps) {
 				placeholder=""
 				className="form-control"
 				onChange={(event) => handleChange(event)}
+				ref={passwordRef}
 				maxLength={50}
 				required
 			/>

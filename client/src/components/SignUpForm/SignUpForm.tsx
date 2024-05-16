@@ -1,18 +1,28 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeUsername, storeUsername } from '../../redux/state/usernameSlice';
 import ConfirmPasswordInput from '../ConfirmPasswordInput/ConfirmPasswordInput';
 import FormSubmitButton from '../FormSubmitButton/FormSubmitButton';
 import PasswordInput from '../PasswordInput/PasswordInput';
 import UsernameInput from '../UsernameInput/UsernameInput';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { removePassword, storePassword } from '../../redux/state/passwordSlice';
 import {
 	removeConfirmPassword,
 	storeConfirmPassword,
 } from '../../redux/state/confirmPasswordSlice';
+import { storeInvalidUsernameFeedback } from '../../redux/state/invalidUsernameFeedbackSlice';
+import { IRootState } from '../../redux/store';
 
 function SignUpForm() {
+	const invalidUsernameFeedback = useSelector(
+		(state: IRootState) => state.invalidUsernameFeedback.value
+	);
 	const dispatch = useDispatch();
+
+	const formRef = useRef<HTMLFormElement>(null);
+	const usernameRef = useRef<HTMLInputElement>(null);
+	const passwordRef = useRef<HTMLInputElement>(null);
+	const confirmPasswordRef = useRef<HTMLInputElement>(null);
 
 	const clearInputs = () => {
 		dispatch(removeUsername());
@@ -22,13 +32,39 @@ function SignUpForm() {
 
 	useEffect(() => {
 		clearInputs();
-	});
+	}, []);
 
-	const validateInput = (
-		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-	) => {
+	const usernameValidityCheck = () => {
+		if (!usernameRef.current?.checkValidity()) {
+			if (usernameRef.current?.validity.valueMissing) {
+				dispatch(storeInvalidUsernameFeedback('Username must not be empty.'));
+			}
+
+			if (usernameRef.current?.validity.tooLong) {
+				dispatch(
+					storeInvalidUsernameFeedback(
+						'Username must be less than 50 characters.'
+					)
+				);
+			}
+		}
+	};
+
+	const displayInvalidMessages = () => {
+		usernameValidityCheck();
+	};
+
+	const validateInput = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		console.log('sign up');
+		clearInputs();
+
+		formRef.current?.classList.add('was-validated');
+
+		if (!formRef.current?.checkValidity()) {
+			displayInvalidMessages();
+		} else {
+			console.log('valid form');
+		}
 	};
 
 	const updateInputInState = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,11 +86,26 @@ function SignUpForm() {
 	};
 
 	return (
-		<form data-testid="sign-up-form" noValidate>
-			<UsernameInput handleChange={updateInputInState} />
-			<PasswordInput handleChange={updateInputInState} />
-			<ConfirmPasswordInput handleChange={updateInputInState} />
-			<FormSubmitButton text="Sign Up" handleClick={validateInput} />
+		<form
+			data-testid="sign-up-form"
+			noValidate
+			onSubmit={(event) => validateInput(event)}
+			ref={formRef}
+		>
+			<UsernameInput
+				handleChange={updateInputInState}
+				invalidFeedback={invalidUsernameFeedback}
+				usernameRef={usernameRef}
+			/>
+			<PasswordInput
+				handleChange={updateInputInState}
+				passwordRef={passwordRef}
+			/>
+			<ConfirmPasswordInput
+				handleChange={updateInputInState}
+				confirmPasswordRef={confirmPasswordRef}
+			/>
+			<FormSubmitButton text="Sign Up" />
 		</form>
 	);
 }
