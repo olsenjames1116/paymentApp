@@ -6,6 +6,10 @@ import PasswordInput from '../PasswordInput/PasswordInput';
 import UsernameInput from '../UsernameInput/UsernameInput';
 import { useEffect } from 'react';
 import { removePassword, storePassword } from '../../redux/state/passwordSlice';
+import {
+	removeConfirmPassword,
+	storeConfirmPassword,
+} from '../../redux/state/confirmPasswordSlice';
 
 function SignUpForm() {
 	const dispatch = useDispatch();
@@ -13,6 +17,7 @@ function SignUpForm() {
 	const clearInputs = () => {
 		dispatch(removeUsername());
 		dispatch(removePassword());
+		dispatch(removeConfirmPassword());
 	};
 
 	useEffect(() => {
@@ -37,7 +42,7 @@ function SignUpForm() {
 				dispatch(storePassword(value));
 				break;
 			case 'confirmPassword':
-				console.log(value);
+				dispatch(storeConfirmPassword(value));
 				break;
 			default:
 				console.log('None of the input ids matched.');
