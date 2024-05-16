@@ -1,13 +1,13 @@
 import SignUpContent from '../SignUpContent';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { BrowserRouter } from 'react-router-dom';
+import TestWrapper from '../../../utils/TestWrapper';
 
 const MockSignUpContent = () => {
 	return (
-		<BrowserRouter>
+		<TestWrapper>
 			<SignUpContent />
-		</BrowserRouter>
+		</TestWrapper>
 	);
 };
 

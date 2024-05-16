@@ -1,13 +1,13 @@
 import LogInPage from '../LogInPage';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { BrowserRouter } from 'react-router-dom';
+import TestWrapper from '../../../utils/TestWrapper';
 
 const MockLogInPage = () => {
 	return (
-		<BrowserRouter>
+		<TestWrapper>
 			<LogInPage />
-		</BrowserRouter>
+		</TestWrapper>
 	);
 };
 

@@ -1,13 +1,13 @@
 import LogInContent from '../LogInContent';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { BrowserRouter } from 'react-router-dom';
+import TestWrapper from '../../../utils/TestWrapper';
 
 const MockLogInContent = () => {
 	return (
-		<BrowserRouter>
+		<TestWrapper>
 			<LogInContent />
-		</BrowserRouter>
+		</TestWrapper>
 	);
 };
 

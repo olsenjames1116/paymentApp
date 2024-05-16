@@ -1,13 +1,13 @@
 import App from '../App';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { BrowserRouter } from 'react-router-dom';
+import TestWrapper from '../../utils/TestWrapper';
 
 const MockApp = () => {
 	return (
-		<BrowserRouter>
+		<TestWrapper>
 			<App />
-		</BrowserRouter>
+		</TestWrapper>
 	);
 };
 

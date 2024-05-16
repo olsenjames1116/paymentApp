@@ -1,12 +1,23 @@
 import { useDispatch } from 'react-redux';
-import { storeUsername } from '../../redux/state/usernameSlice';
+import { removeUsername, storeUsername } from '../../redux/state/usernameSlice';
 import ConfirmPasswordInput from '../ConfirmPasswordInput/ConfirmPasswordInput';
 import FormSubmitButton from '../FormSubmitButton/FormSubmitButton';
 import PasswordInput from '../PasswordInput/PasswordInput';
 import UsernameInput from '../UsernameInput/UsernameInput';
+import { useEffect } from 'react';
+import { removePassword, storePassword } from '../../redux/state/passwordSlice';
 
 function SignUpForm() {
 	const dispatch = useDispatch();
+
+	const clearInputs = () => {
+		dispatch(removeUsername());
+		dispatch(removePassword());
+	};
+
+	useEffect(() => {
+		clearInputs();
+	});
 
 	const validateInput = (
 		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -23,7 +34,7 @@ function SignUpForm() {
 				dispatch(storeUsername(value));
 				break;
 			case 'password':
-				console.log(value);
+				dispatch(storePassword(value));
 				break;
 			case 'confirmPassword':
 				console.log(value);
