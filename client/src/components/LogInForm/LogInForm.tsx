@@ -4,8 +4,8 @@ import PasswordInput from '../PasswordInput/PasswordInput';
 import FormSubmitButton from '../FormSubmitButton/FormSubmitButton';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { removeUsername } from '../../redux/state/usernameSlice';
-import { removePassword } from '../../redux/state/passwordSlice';
+import { removeUsername, storeUsername } from '../../redux/state/usernameSlice';
+import { removePassword, storePassword } from '../../redux/state/passwordSlice';
 import { removeConfirmPassword } from '../../redux/state/confirmPasswordSlice';
 
 function LogInForm() {
@@ -33,10 +33,10 @@ function LogInForm() {
 
 		switch (id) {
 			case 'username':
-				console.log(value);
+				dispatch(storeUsername(value));
 				break;
 			case 'password':
-				console.log(value);
+				dispatch(storePassword(value));
 				break;
 			default:
 				console.log('None of the input ids matched.');
