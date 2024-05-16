@@ -2,8 +2,25 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import UsernameInput from '../UsernameInput/UsernameInput';
 import PasswordInput from '../PasswordInput/PasswordInput';
 import FormSubmitButton from '../FormSubmitButton/FormSubmitButton';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { removeUsername } from '../../redux/state/usernameSlice';
+import { removePassword } from '../../redux/state/passwordSlice';
+import { removeConfirmPassword } from '../../redux/state/confirmPasswordSlice';
 
 function LogInForm() {
+	const dispatch = useDispatch();
+
+	const clearInputs = () => {
+		dispatch(removeUsername());
+		dispatch(removePassword());
+		dispatch(removeConfirmPassword());
+	};
+
+	useEffect(() => {
+		clearInputs();
+	});
+
 	const validateInput = (
 		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
 	) => {
