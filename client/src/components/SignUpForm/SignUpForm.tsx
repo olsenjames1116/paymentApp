@@ -10,12 +10,22 @@ import {
 	removeConfirmPassword,
 	storeConfirmPassword,
 } from '../../redux/state/confirmPasswordSlice';
-import { storeInvalidUsernameFeedback } from '../../redux/state/invalidUsernameFeedbackSlice';
+import {
+	removeInvalidUsernameFeedback,
+	storeInvalidUsernameFeedback,
+} from '../../redux/state/invalidUsernameFeedbackSlice';
 import { IRootState } from '../../redux/store';
+import {
+	removeInvalidPasswordFeedback,
+	storeInvalidPasswordFeedback,
+} from '../../redux/state/invalidPasswordFeedbackSlice';
 
 function SignUpForm() {
 	const invalidUsernameFeedback = useSelector(
 		(state: IRootState) => state.invalidUsernameFeedback.value
+	);
+	const invalidPasswordFeedback = useSelector(
+		(state: IRootState) => state.invalidPasswordFeedback.value
 	);
 	const dispatch = useDispatch();
 
@@ -28,6 +38,8 @@ function SignUpForm() {
 		dispatch(removeUsername());
 		dispatch(removePassword());
 		dispatch(removeConfirmPassword());
+		dispatch(removeInvalidUsernameFeedback());
+		dispatch(removeInvalidPasswordFeedback());
 	};
 
 	useEffect(() => {
@@ -50,8 +62,23 @@ function SignUpForm() {
 		}
 	};
 
+	const passwordValidityCheck = () => {
+		if (passwordRef.current?.validity.valueMissing) {
+			dispatch(storeInvalidPasswordFeedback('Password must not be empty.'));
+		}
+
+		if (passwordRef.current?.validity.tooLong) {
+			dispatch(
+				storeInvalidPasswordFeedback(
+					'Password must be less than 50 characters.'
+				)
+			);
+		}
+	};
+
 	const displayInvalidMessages = () => {
 		usernameValidityCheck();
+		passwordValidityCheck();
 	};
 
 	const validateInput = (event: React.FormEvent<HTMLFormElement>) => {
@@ -95,15 +122,16 @@ function SignUpForm() {
 			<UsernameInput
 				handleChange={updateInputInState}
 				invalidFeedback={invalidUsernameFeedback}
-				usernameRef={usernameRef}
+				elementRef={usernameRef}
 			/>
 			<PasswordInput
 				handleChange={updateInputInState}
-				passwordRef={passwordRef}
+				invalidFeedback={invalidPasswordFeedback}
+				elementRef={passwordRef}
 			/>
 			<ConfirmPasswordInput
 				handleChange={updateInputInState}
-				confirmPasswordRef={confirmPasswordRef}
+				elementRef={confirmPasswordRef}
 			/>
 			<FormSubmitButton text="Sign Up" />
 		</form>

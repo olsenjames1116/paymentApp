@@ -1,9 +1,14 @@
 interface PasswordInputProps {
 	handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-	passwordRef: React.RefObject<HTMLInputElement>;
+	invalidFeedback: string[];
+	elementRef: React.RefObject<HTMLInputElement>;
 }
 
-function PasswordInput({ handleChange, passwordRef }: PasswordInputProps) {
+function PasswordInput({
+	handleChange,
+	elementRef,
+	invalidFeedback,
+}: PasswordInputProps) {
 	return (
 		<div className="form-floating" data-testid="password-input-container">
 			<input
@@ -14,11 +19,16 @@ function PasswordInput({ handleChange, passwordRef }: PasswordInputProps) {
 				placeholder=""
 				className="form-control"
 				onChange={(event) => handleChange(event)}
-				ref={passwordRef}
+				ref={elementRef}
 				maxLength={50}
 				required
 			/>
 			<label htmlFor="password">Password</label>
+			<ul className="invalid-feedback">
+				{invalidFeedback.map((feedback, index) => {
+					return <li key={index}>{feedback}</li>;
+				})}
+			</ul>
 		</div>
 	);
 }

@@ -1,11 +1,11 @@
 interface ConfirmPasswordInputProps {
 	handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-	confirmPasswordRef: React.RefObject<HTMLInputElement>;
+	elementRef: React.RefObject<HTMLInputElement>;
 }
 
 function ConfirmPasswordInput({
 	handleChange,
-	confirmPasswordRef,
+	elementRef,
 }: ConfirmPasswordInputProps) {
 	return (
 		<div
@@ -20,7 +20,7 @@ function ConfirmPasswordInput({
 				placeholder=""
 				className="form-control"
 				onChange={(event) => handleChange(event)}
-				ref={confirmPasswordRef}
+				ref={elementRef}
 				maxLength={50}
 				required
 			/>

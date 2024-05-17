@@ -4,7 +4,7 @@ const initialState: { value: string[] } = {
 	value: [],
 };
 
-// Represents the password entered on the log in and sign up pages.
+// Represents the feedback sent to the user if the username is invalid on the sign up and log in pages.
 export const invalidUsernameFeedbackSlice = createSlice({
 	name: 'invalidUsernameFeedback',
 	initialState,

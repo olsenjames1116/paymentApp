@@ -1,13 +1,13 @@
 interface UsernameInputProps {
 	handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	invalidFeedback: string[];
-	usernameRef: React.RefObject<HTMLInputElement>;
+	elementRef: React.RefObject<HTMLInputElement>;
 }
 
 function UsernameInput({
 	handleChange,
 	invalidFeedback,
-	usernameRef,
+	elementRef,
 }: UsernameInputProps) {
 	return (
 		<div className="form-floating" data-testid="username-input-container">
@@ -19,7 +19,7 @@ function UsernameInput({
 				placeholder=""
 				className="form-control"
 				onChange={(event) => handleChange(event)}
-				ref={usernameRef}
+				ref={elementRef}
 				maxLength={50}
 				required
 			/>
