@@ -10,7 +10,7 @@ export const store = configureStore({
 	reducer: {
 		username: usernameReducer,
 		password: passwordReducer,
-		confirmPasswordReducer: confirmPasswordReducer,
+		confirmPassword: confirmPasswordReducer,
 		invalidUsernameFeedback: invalidUsernameFeedbackReducer,
 		invalidPasswordFeedback: invalidPasswordFeedbackReducer,
 		invalidConfirmPasswordFeedback: invalidConfirmPasswordFeedbackReducer,

@@ -21,8 +21,12 @@ import {
 	storeInvalidConfirmPasswordFeedback,
 } from '../../redux/state/invalidConfirmPasswordFeedbackSlice';
 import AuthenticationInput from '../AuthenticationInput/AuthenticationInput';
+import api from '../../axiosConfig';
+import { useNavigate } from 'react-router-dom';
 
+// Represents the form to create a new user.
 function SignUpForm() {
+	// Assign all the state for displaying error messages to the user to scoped variables.
 	const invalidUsernameFeedback = useSelector(
 		(state: IRootState) => state.invalidUsernameFeedback.value
 	);
@@ -33,26 +37,38 @@ function SignUpForm() {
 		(state: IRootState) => state.invalidConfirmPasswordFeedback.value
 	);
 
-	const dispatch = useDispatch();
+	// Assign all the state for storing user input to scoped variables.
+	const username = useSelector((state: IRootState) => state.username.value);
+	const password = useSelector((state: IRootState) => state.password.value);
+	const confirmPassword = useSelector(
+		(state: IRootState) => state.confirmPassword.value
+	);
 
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	// Create references for the form and all the inputs.
 	const formRef = useRef<HTMLFormElement>(null);
 	const usernameRef = useRef<HTMLInputElement>(null);
 	const passwordRef = useRef<HTMLInputElement>(null);
 	const confirmPasswordRef = useRef<HTMLInputElement>(null);
 
-	const clearInputs = () => {
-		dispatch(removeUsername());
-		dispatch(removePassword());
-		dispatch(removeConfirmPassword());
+	// Clear all the feedback state.
+	const clearFeedback = () => {
 		dispatch(removeInvalidUsernameFeedback());
 		dispatch(removeInvalidPasswordFeedback());
 		dispatch(removeInvalidConfirmPasswordFeedback());
 	};
 
+	// Clear all the state for storing user input on initial render.
 	useEffect(() => {
-		clearInputs();
+		dispatch(removeUsername());
+		dispatch(removePassword());
+		dispatch(removeConfirmPassword());
 	}, []);
 
+	/* Perform a validity check on the username field for the user's invalid input to 
+	determine which message is most meaningful to display back to the user. */
 	const usernameValidityCheck = () => {
 		if (!usernameRef.current?.checkValidity()) {
 			if (usernameRef.current?.validity.valueMissing) {
@@ -69,6 +85,8 @@ function SignUpForm() {
 		}
 	};
 
+	/* Perform a validity check on the password field for the user's invalid input to 
+	determine which message is most meaningful to display back to the user. */
 	const passwordValidityCheck = () => {
 		if (passwordRef.current?.validity.valueMissing) {
 			dispatch(storeInvalidPasswordFeedback('Password must not be empty.'));
@@ -83,6 +101,8 @@ function SignUpForm() {
 		}
 	};
 
+	/* Perform a validity check on the confirmation password field for the user's invalid 
+	input to determine which message is most meaningful to display back to the user. */
 	const confirmPasswordValidityCheck = () => {
 		if (confirmPasswordRef.current?.validity.valueMissing) {
 			dispatch(
@@ -101,25 +121,54 @@ function SignUpForm() {
 		}
 	};
 
+	// Create a form data object with the user's input.
+	const createFormData: () => FormData = () => {
+		const formData = new FormData();
+		formData.append('username', username);
+		formData.append('password', password);
+		formData.append('confirmPassword', confirmPassword);
+
+		return formData;
+	};
+
+	// Sign up the user by passing form data to the API.
+	const signUp = () => {
+		const formData = createFormData();
+
+		try {
+			api.post('/log-in', formData);
+
+			// Alert the user they will be redirected and redirect them.
+			alert('Account created. You will be redirected to log in.');
+			navigate('/log-in');
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	// Run through the validity checks for all input fields from invalid input.
 	const displayInvalidMessages = () => {
 		usernameValidityCheck();
 		passwordValidityCheck();
 		confirmPasswordValidityCheck();
 	};
 
+	// Validate the user's input.
 	const validateInput = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		clearInputs();
+		clearFeedback();
 
+		// Add Bootstrap class for styling valid and invalid input fields.
 		formRef.current?.classList.add('was-validated');
 
 		if (!formRef.current?.checkValidity()) {
 			displayInvalidMessages();
 		} else {
-			console.log('valid form');
+			signUp();
 		}
 	};
 
+	// Update the appropriate state variable from a changed input field.
 	const updateInputInState = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = event.target;
 
