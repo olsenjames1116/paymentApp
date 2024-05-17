@@ -6,6 +6,7 @@ import { removeUsername, storeUsername } from '../../redux/state/usernameSlice';
 import { removePassword, storePassword } from '../../redux/state/passwordSlice';
 import { removeConfirmPassword } from '../../redux/state/confirmPasswordSlice';
 
+// Represents the form to log in an existing user.
 function LogInForm() {
 	const dispatch = useDispatch();
 

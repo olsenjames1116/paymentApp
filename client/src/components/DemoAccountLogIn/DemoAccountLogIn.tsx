@@ -2,6 +2,8 @@ interface DemoAccountLogInProps {
 	handleClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
+/* Represents the component on the log in page to log the user in to 
+a demo account. */
 function DemoAccountLogIn({ handleClick }: DemoAccountLogInProps) {
 	return (
 		<button

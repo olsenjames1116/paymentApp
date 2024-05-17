@@ -2,6 +2,7 @@ interface AccountFormContainerProps {
 	children: React.ReactNode;
 }
 
+// Represents the account form container component used on the log in and sign up pages.
 function AccountFormContainer({ children }: AccountFormContainerProps) {
 	return (
 		<div data-testid="account-form-container" className="row">

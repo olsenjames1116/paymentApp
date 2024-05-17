@@ -7,6 +7,8 @@ interface AuthenticationInputProps {
 	elementRef: React.RefObject<HTMLInputElement>;
 }
 
+/* Represents an input for username, password and confirmation password on
+log in and sign up pageXOffset. */
 function AuthenticationInput({
 	inputName,
 	testid,
