@@ -1,6 +1,4 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import UsernameInput from '../UsernameInput/UsernameInput';
-import PasswordInput from '../PasswordInput/PasswordInput';
 import FormSubmitButton from '../FormSubmitButton/FormSubmitButton';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
@@ -48,8 +46,6 @@ function LogInForm() {
 			className="col"
 			onSubmit={(event) => validateInput(event)}
 		>
-			<UsernameInput handleChange={updateInputInState} />
-			<PasswordInput handleChange={updateInputInState} />
 			<FormSubmitButton text="Log In" />
 		</form>
 	);
