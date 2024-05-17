@@ -32,7 +32,10 @@ function AuthenticationInput({
 			<label htmlFor={inputName} data-testid={`${testid}-input-label`}>
 				{label}
 			</label>
-			<ul className="invalid-feedback">
+			<ul
+				className="invalid-feedback"
+				data-testid={`${testid}-input-invalid-feedback`}
+			>
 				{invalidFeedback.map((feedback, index) => {
 					return <li key={index}>{feedback}</li>;
 				})}

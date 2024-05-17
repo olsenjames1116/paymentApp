@@ -23,4 +23,15 @@ describe('AccountFormContainer', () => {
 
 		expect(accountFormContainer).toBeInTheDocument();
 	});
+
+	it('should render children.', () => {
+		render(
+			<MockAccountFormContainer
+				children={<div data-testid="account-form-child" />}
+			/>
+		);
+		const accountFormChild = screen.getByTestId('account-form-child');
+
+		expect(accountFormChild).toBeInTheDocument();
+	});
 });

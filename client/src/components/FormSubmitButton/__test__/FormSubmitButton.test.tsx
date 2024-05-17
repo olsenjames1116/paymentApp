@@ -22,5 +22,12 @@ describe('FormSubmitButton', () => {
 
 		expect(formSubmitButton).toBeInTheDocument();
 	});
+
+	it('should match the text content with the text prop.', () => {
+		render(<MockFormSubmitButton text="Test Button" />);
+		const formSubmitButton = screen.getByTestId('form-submit-button');
+
+		expect(formSubmitButton).toHaveTextContent(/test button/i);
+	});
 });
 FormSubmitButton;

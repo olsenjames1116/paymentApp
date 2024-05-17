@@ -33,4 +33,30 @@ describe('SignUpForm', () => {
 		expect(passwordInput).toBeInvalid();
 		expect(confirmPasswordInput).toBeInvalid();
 	});
+
+	it('should display error messages if the inputs are invalid.', async () => {
+		render(<MockSignUpForm />);
+		const formSubmitButton = screen.getByTestId('form-submit-button');
+
+		await userEvent.click(formSubmitButton);
+		const usernameInvalidFeedback = screen.getByTestId(
+			'username-input-invalid-feedback'
+		);
+		const passwordInvalidFeedback = screen.getByTestId(
+			'password-input-invalid-feedback'
+		);
+		const confirmPasswordInvalidFeedback = screen.getByTestId(
+			'confirm-password-input-invalid-feedback'
+		);
+
+		expect(usernameInvalidFeedback).toHaveTextContent(
+			/username must not be empty./i
+		);
+		expect(passwordInvalidFeedback).toHaveTextContent(
+			/password must not be empty./i
+		);
+		expect(confirmPasswordInvalidFeedback).toHaveTextContent(
+			/confirmation password must not be empty./i
+		);
+	});
 });
