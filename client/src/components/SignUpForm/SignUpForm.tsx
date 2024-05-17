@@ -1,9 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { removeUsername, storeUsername } from '../../redux/state/usernameSlice';
-import ConfirmPasswordInput from '../ConfirmPasswordInput/ConfirmPasswordInput';
 import FormSubmitButton from '../FormSubmitButton/FormSubmitButton';
-import PasswordInput from '../PasswordInput/PasswordInput';
-import UsernameInput from '../UsernameInput/UsernameInput';
 import { useEffect, useRef } from 'react';
 import { removePassword, storePassword } from '../../redux/state/passwordSlice';
 import {
@@ -19,6 +16,11 @@ import {
 	removeInvalidPasswordFeedback,
 	storeInvalidPasswordFeedback,
 } from '../../redux/state/invalidPasswordFeedbackSlice';
+import {
+	removeInvalidConfirmPasswordFeedback,
+	storeInvalidConfirmPasswordFeedback,
+} from '../../redux/state/invalidConfirmPasswordFeedbackSlice';
+import AuthenticationInput from '../AuthenticationInput/AuthenticationInput';
 
 function SignUpForm() {
 	const invalidUsernameFeedback = useSelector(
@@ -27,6 +29,10 @@ function SignUpForm() {
 	const invalidPasswordFeedback = useSelector(
 		(state: IRootState) => state.invalidPasswordFeedback.value
 	);
+	const invalidConfirmPasswordFeedback = useSelector(
+		(state: IRootState) => state.invalidConfirmPasswordFeedback.value
+	);
+
 	const dispatch = useDispatch();
 
 	const formRef = useRef<HTMLFormElement>(null);
@@ -40,6 +46,7 @@ function SignUpForm() {
 		dispatch(removeConfirmPassword());
 		dispatch(removeInvalidUsernameFeedback());
 		dispatch(removeInvalidPasswordFeedback());
+		dispatch(removeInvalidConfirmPasswordFeedback());
 	};
 
 	useEffect(() => {
@@ -76,9 +83,28 @@ function SignUpForm() {
 		}
 	};
 
+	const confirmPasswordValidityCheck = () => {
+		if (confirmPasswordRef.current?.validity.valueMissing) {
+			dispatch(
+				storeInvalidConfirmPasswordFeedback(
+					'Confirmation password must not be empty.'
+				)
+			);
+		}
+
+		if (confirmPasswordRef.current?.validity.tooLong) {
+			dispatch(
+				storeInvalidConfirmPasswordFeedback(
+					'Confirmation password must be less than 50 characters.'
+				)
+			);
+		}
+	};
+
 	const displayInvalidMessages = () => {
 		usernameValidityCheck();
 		passwordValidityCheck();
+		confirmPasswordValidityCheck();
 	};
 
 	const validateInput = (event: React.FormEvent<HTMLFormElement>) => {
@@ -119,18 +145,28 @@ function SignUpForm() {
 			onSubmit={(event) => validateInput(event)}
 			ref={formRef}
 		>
-			<UsernameInput
+			<AuthenticationInput
+				inputName="username"
+				testid="username"
+				label="Username"
 				handleChange={updateInputInState}
 				invalidFeedback={invalidUsernameFeedback}
 				elementRef={usernameRef}
 			/>
-			<PasswordInput
+			<AuthenticationInput
+				inputName="password"
+				testid="password"
+				label="Password"
 				handleChange={updateInputInState}
 				invalidFeedback={invalidPasswordFeedback}
 				elementRef={passwordRef}
 			/>
-			<ConfirmPasswordInput
+			<AuthenticationInput
+				inputName="confirmPassword"
+				testid="confirm-password"
+				label="Confirmation Password"
 				handleChange={updateInputInState}
+				invalidFeedback={invalidConfirmPasswordFeedback}
 				elementRef={confirmPasswordRef}
 			/>
 			<FormSubmitButton text="Sign Up" />

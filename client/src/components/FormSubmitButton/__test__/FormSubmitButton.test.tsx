@@ -5,20 +5,19 @@ import TestWrapper from '../../../utils/TestWrapper';
 
 interface FormSubmitButtonProps {
 	text: string;
-	handleClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-const MockFormSubmitButton = ({ text, handleClick }: FormSubmitButtonProps) => {
+const MockFormSubmitButton = ({ text }: FormSubmitButtonProps) => {
 	return (
 		<TestWrapper>
-			<FormSubmitButton text={text} handleClick={handleClick} />
+			<FormSubmitButton text={text} />
 		</TestWrapper>
 	);
 };
 
 describe('FormSubmitButton', () => {
 	it('should render component.', () => {
-		render(<MockFormSubmitButton text="" handleClick={() => {}} />);
+		render(<MockFormSubmitButton text="" />);
 		const formSubmitButton = screen.getByTestId('form-submit-button');
 
 		expect(formSubmitButton).toBeInTheDocument();

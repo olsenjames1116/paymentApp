@@ -1,21 +1,27 @@
-interface UsernameInputProps {
+interface AuthenticationInputProps {
+	testid: string;
+	inputName: string;
+	label: string;
 	handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	invalidFeedback: string[];
 	elementRef: React.RefObject<HTMLInputElement>;
 }
 
-function UsernameInput({
+function AuthenticationInput({
+	inputName,
+	testid,
+	label,
 	handleChange,
 	invalidFeedback,
 	elementRef,
-}: UsernameInputProps) {
+}: AuthenticationInputProps) {
 	return (
-		<div className="form-floating" data-testid="username-input-container">
+		<div className="form-floating" data-testid={`${testid}-input-container`}>
 			<input
-				type="text"
-				name="username"
-				id="username"
-				data-testid="username-input"
+				type={inputName}
+				name={inputName}
+				id={inputName}
+				data-testid={`${testid}-input`}
 				placeholder=""
 				className="form-control"
 				onChange={(event) => handleChange(event)}
@@ -23,7 +29,7 @@ function UsernameInput({
 				maxLength={50}
 				required
 			/>
-			<label htmlFor="username">Username</label>
+			<label htmlFor={inputName}>{label}</label>
 			<ul className="invalid-feedback">
 				{invalidFeedback.map((feedback, index) => {
 					return <li key={index}>{feedback}</li>;
@@ -33,4 +39,4 @@ function UsernameInput({
 	);
 }
 
-export default UsernameInput;
+export default AuthenticationInput;
