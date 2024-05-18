@@ -143,7 +143,7 @@ function SignUpForm() {
 		const formData = createFormData();
 
 		try {
-			api.post('/sign-up', formData);
+			api.post('/users', formData);
 
 			// Alert the user they will be redirected and redirect them.
 			alert('Account created. You will be redirected to log in.');
