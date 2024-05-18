@@ -1,30 +1,134 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FormSubmitButton from '../FormSubmitButton/FormSubmitButton';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useRef } from 'react';
 import { removeUsername, storeUsername } from '../../redux/state/usernameSlice';
 import { removePassword, storePassword } from '../../redux/state/passwordSlice';
-import { removeConfirmPassword } from '../../redux/state/confirmPasswordSlice';
+import { IRootState } from '../../redux/store';
+import { useNavigate } from 'react-router-dom';
+import {
+	removeInvalidPasswordFeedback,
+	storeInvalidPasswordFeedback,
+} from '../../redux/state/invalidPasswordFeedbackSlice';
+import {
+	removeInvalidUsernameFeedback,
+	storeInvalidUsernameFeedback,
+} from '../../redux/state/invalidUsernameFeedbackSlice';
+import api from '../../axiosConfig';
+import AuthenticationInput from '../AuthenticationInput/AuthenticationInput';
 
 // Represents the form to log in an existing user.
 function LogInForm() {
-	const dispatch = useDispatch();
+	// Assign all the state for displaying error messages to the user to scoped variables.
+	const invalidUsernameFeedback = useSelector(
+		(state: IRootState) => state.invalidUsernameFeedback.value
+	);
+	const invalidPasswordFeedback = useSelector(
+		(state: IRootState) => state.invalidPasswordFeedback.value
+	);
 
-	const clearInputs = () => {
+	// Assign all the state for storing user input to scoped variables.
+	const username = useSelector((state: IRootState) => state.username.value);
+	const password = useSelector((state: IRootState) => state.password.value);
+
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	// Create references for the form an all its inputs.
+	const formRef = useRef<HTMLFormElement>(null);
+	const usernameRef = useRef<HTMLInputElement>(null);
+	const passwordRef = useRef<HTMLInputElement>(null);
+
+	// Clear all the feedback state.
+	const clearFeedback = () => {
+		dispatch(removeInvalidUsernameFeedback());
+		dispatch(removeInvalidPasswordFeedback());
+	};
+
+	// Clear all the state for storing user input on initial render.
+	useEffect(() => {
 		dispatch(removeUsername());
 		dispatch(removePassword());
-		dispatch(removeConfirmPassword());
-	};
-
-	useEffect(() => {
-		clearInputs();
 	}, []);
 
-	const validateInput = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		console.log('log in');
+	/* Perform a validity check on the username field for the user's invalid input to 
+	determine which message is most meaningful to display back to the user. */
+	const usernameValidityCheck = () => {
+		if (!usernameRef.current?.checkValidity()) {
+			if (usernameRef.current?.validity.valueMissing) {
+				dispatch(storeInvalidUsernameFeedback('Username must not be empty.'));
+			}
+
+			if (usernameRef.current?.validity.tooLong) {
+				dispatch(
+					storeInvalidUsernameFeedback(
+						'Username must be less than 50 characters.'
+					)
+				);
+			}
+		}
 	};
 
+	/* Perform a validity check on the password field for the user's invalid input to 
+	determine which message is most meaningful to display back to the user. */
+	const passwordValidityCheck = () => {
+		if (passwordRef.current?.validity.valueMissing) {
+			dispatch(storeInvalidPasswordFeedback('Password must not be empty.'));
+		}
+
+		if (passwordRef.current?.validity.tooLong) {
+			dispatch(
+				storeInvalidPasswordFeedback(
+					'Password must be less than 50 characters.'
+				)
+			);
+		}
+	};
+
+	// Run through the validity checks for all input fields from invalid input.
+	const displayInvalidMessages = () => {
+		usernameValidityCheck();
+		passwordValidityCheck();
+	};
+
+	// Create a form data object with the user's input.
+	const createFormData: () => FormData = () => {
+		const formData = new FormData();
+		formData.append('username', username);
+		formData.append('password', password);
+
+		return formData;
+	};
+
+	// Log in the user by passing form data to the API.
+	const logIn = () => {
+		const formData = createFormData();
+
+		try {
+			api.post('/log-in', formData);
+
+			navigate('/');
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	// Validate the user's input.
+	const validateInput = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		clearFeedback();
+
+		// Add Bootstrap class for styling valid and invalid input fields.
+		formRef.current?.classList.add('was-validated');
+
+		if (!formRef.current?.checkValidity()) {
+			displayInvalidMessages();
+		} else {
+			logIn();
+		}
+	};
+
+	// Update the appropriate state variable from a changed input field.
 	const updateInputInState = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = event.target;
 
@@ -46,7 +150,24 @@ function LogInForm() {
 			noValidate
 			className="col"
 			onSubmit={(event) => validateInput(event)}
+			ref={formRef}
 		>
+			<AuthenticationInput
+				inputName="username"
+				testid="username"
+				label="Username"
+				handleChange={updateInputInState}
+				invalidFeedback={invalidUsernameFeedback}
+				elementRef={usernameRef}
+			/>
+			<AuthenticationInput
+				inputName="password"
+				testid="password"
+				label="Password"
+				handleChange={updateInputInState}
+				invalidFeedback={invalidPasswordFeedback}
+				elementRef={passwordRef}
+			/>
 			<FormSubmitButton text="Log In" />
 		</form>
 	);

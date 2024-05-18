@@ -121,6 +121,13 @@ function SignUpForm() {
 		}
 	};
 
+	// Run through the validity checks for all input fields from invalid input.
+	const displayInvalidMessages = () => {
+		usernameValidityCheck();
+		passwordValidityCheck();
+		confirmPasswordValidityCheck();
+	};
+
 	// Create a form data object with the user's input.
 	const createFormData: () => FormData = () => {
 		const formData = new FormData();
@@ -136,7 +143,7 @@ function SignUpForm() {
 		const formData = createFormData();
 
 		try {
-			api.post('/log-in', formData);
+			api.post('/sign-up', formData);
 
 			// Alert the user they will be redirected and redirect them.
 			alert('Account created. You will be redirected to log in.');
@@ -144,13 +151,6 @@ function SignUpForm() {
 		} catch (error) {
 			console.log(error);
 		}
-	};
-
-	// Run through the validity checks for all input fields from invalid input.
-	const displayInvalidMessages = () => {
-		usernameValidityCheck();
-		passwordValidityCheck();
-		confirmPasswordValidityCheck();
 	};
 
 	// Validate the user's input.
