@@ -1,14 +1,8 @@
 import { Link } from 'react-router-dom';
 import DemoAccountLogIn from '../DemoAccountLogIn/DemoAccountLogIn';
 
+// Represents the alternatives to logging in on the log in page.
 function LogInOptions() {
-	const logInDemoAccount = (
-		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-	) => {
-		event.preventDefault();
-		console.log('demo');
-	};
-
 	return (
 		<ul data-testid="log-in-options">
 			<li>
@@ -17,7 +11,7 @@ function LogInOptions() {
 				</Link>
 			</li>
 			<li>
-				<DemoAccountLogIn handleClick={logInDemoAccount} />
+				<DemoAccountLogIn />
 			</li>
 		</ul>
 	);
