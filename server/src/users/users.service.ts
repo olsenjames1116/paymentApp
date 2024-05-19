@@ -10,8 +10,10 @@ export class UsersService {
     @InjectRepository(User) private usersRepository: Repository<User>,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    return createUserDto;
+  async create(createUserDto: CreateUserDto) {
+    const newUser = await this.usersRepository.save(createUserDto);
+
+    return newUser;
   }
 
   findAll() {
