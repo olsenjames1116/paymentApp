@@ -2,8 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  Param,
-  ParseIntPipe,
   Post,
   UseInterceptors,
   ValidationPipe,
@@ -30,8 +28,8 @@ export class UsersController {
   }
 
   // GET /users/:id
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.findOne(id);
-  }
+  // @Get(':id')
+  // findOne(@Param('', ParseIntPipe) id: number) {
+  //   return this.usersService.findOne(id);
+  // }
 }

@@ -17,7 +17,7 @@ describe('UsersService', () => {
       };
     }),
     findOne: jest.fn((query) => {
-      if (query.where.username === 'testUser1' || query.where.id === 1) {
+      if (query.where.username === 'testUser1') {
         return {
           id: 1,
           username: 'testUser1',
@@ -71,7 +71,7 @@ describe('UsersService', () => {
   });
 
   it('should find a single user.', async () => {
-    expect(await service.findOne(1)).toStrictEqual({
+    expect(await service.findOne('testUser1')).toStrictEqual({
       id: 1,
       username: 'testUser1',
       password: 'password',
