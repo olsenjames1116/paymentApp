@@ -17,8 +17,13 @@ describe('UsersService', () => {
       };
     }),
     findOne: jest.fn((query) => {
-      if (query.where.username === 'testUser1') {
-        return true;
+      if (query.where.username === 'testUser1' || query.where.id === 1) {
+        return {
+          id: 1,
+          username: 'testUser1',
+          password: 'password',
+          balance: 1000.0,
+        };
       }
 
       return null;
@@ -63,5 +68,14 @@ describe('UsersService', () => {
     };
 
     await expect(service.create(user)).rejects.toThrow(ConflictException);
+  });
+
+  it('should find a single user.', async () => {
+    expect(await service.findOne(1)).toStrictEqual({
+      id: 1,
+      username: 'testUser1',
+      password: 'password',
+      balance: 1000.0,
+    });
   });
 });

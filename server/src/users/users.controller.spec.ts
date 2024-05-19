@@ -9,6 +9,14 @@ describe('UsersController', () => {
     create: jest.fn(() => {
       return { id: 1 };
     }),
+    findOne: jest.fn((id) => {
+      return {
+        id,
+        username: 'testUser',
+        password: 'password',
+        balance: 1000.0,
+      };
+    }),
   };
 
   beforeEach(async () => {
@@ -35,5 +43,14 @@ describe('UsersController', () => {
     };
 
     expect(controller.create(user)).toStrictEqual({ id: expect.any(Number) });
+  });
+
+  it('should find a new user.', () => {
+    expect(controller.findOne(1)).toStrictEqual({
+      id: 1,
+      username: 'testUser',
+      password: 'password',
+      balance: 1000.0,
+    });
   });
 });
