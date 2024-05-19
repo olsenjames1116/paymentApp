@@ -26,7 +26,13 @@ export class UsersService {
     );
   }
 
-  findAll() {
-    return this.usersRepository.find();
+  async findAll() {
+    return await this.usersRepository.find();
+  }
+
+  async findOne(id: number) {
+    return await this.usersRepository.findOne({
+      where: { id: id },
+    });
   }
 }

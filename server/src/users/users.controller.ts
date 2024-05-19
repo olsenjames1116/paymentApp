@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  Param,
+  ParseIntPipe,
   Post,
   UseInterceptors,
   ValidationPipe,
@@ -14,16 +16,22 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  // POST /users
+  @Post()
+  @UseInterceptors(FileInterceptor('formData'))
+  create(@Body(ValidationPipe) createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
+  }
+
   // GET /users
   @Get()
   findAll() {
     return this.usersService.findAll();
   }
 
-  // POST /users
-  @Post()
-  @UseInterceptors(FileInterceptor('formData'))
-  create(@Body(ValidationPipe) createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  // GET /users/:id
+  @Get(':id')
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.findOne(id);
   }
 }
