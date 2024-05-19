@@ -23,6 +23,7 @@ import {
 import AuthenticationInput from '../AuthenticationInput/AuthenticationInput';
 import api from '../../axiosConfig';
 import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 
 // Represents the form to create a new user.
 function SignUpForm() {
@@ -58,6 +59,10 @@ function SignUpForm() {
 		dispatch(removeInvalidUsernameFeedback());
 		dispatch(removeInvalidPasswordFeedback());
 		dispatch(removeInvalidConfirmPasswordFeedback());
+
+		usernameRef.current?.setCustomValidity('');
+		passwordRef.current?.setCustomValidity('');
+		confirmPasswordRef.current?.setCustomValidity('');
 	};
 
 	// Clear all the state for storing user input on initial render.
@@ -138,17 +143,59 @@ function SignUpForm() {
 		return formData;
 	};
 
+	const displayInputServerErrors = (data: { message: string[] | string }) => {
+		let messages;
+
+		if (typeof data.message === 'string') {
+			messages = [data.message];
+		} else {
+			messages = data.message;
+		}
+
+		const usernamePattern = /username|user/i;
+		const passwordPattern = /^Password/;
+		const confirmPasswordPattern = /confirmation password|passwords/i;
+
+		messages.map((message: string) => {
+			if (usernamePattern.test(message)) {
+				console.log(`username: ${message}`);
+				dispatch(storeInvalidUsernameFeedback(message));
+				usernameRef.current?.setCustomValidity('invalid');
+			}
+
+			if (passwordPattern.test(message)) {
+				console.log(`password: ${message}`);
+				dispatch(storeInvalidPasswordFeedback(message));
+				passwordRef.current?.setCustomValidity('invalid');
+			}
+
+			if (confirmPasswordPattern.test(message)) {
+				console.log(`confirm: ${message}`);
+				dispatch(storeInvalidConfirmPasswordFeedback(message));
+				confirmPasswordRef.current?.setCustomValidity('invalid');
+			}
+		});
+	};
+
 	// Sign up the user by passing form data to the API.
-	const signUp = () => {
+	const signUp = async () => {
 		const formData = createFormData();
 
 		try {
-			api.post('/users', formData);
+			await api.post('/users', formData);
 
 			// Alert the user they will be redirected and redirect them.
 			alert('Account created. You will be redirected to log in.');
 			navigate('/log-in');
 		} catch (error) {
+			if (error instanceof AxiosError) {
+				if (error.response?.status === 400 || error.response?.status === 409) {
+					console.log(formData);
+					const { data } = error.response;
+					displayInputServerErrors(data);
+				}
+			}
+
 			console.log(error);
 		}
 	};
