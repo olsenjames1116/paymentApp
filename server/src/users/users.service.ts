@@ -18,7 +18,7 @@ export class UsersService {
     if (!user) {
       const newUser = await this.usersRepository.save(createUserDto);
 
-      return newUser.id;
+      return { id: newUser.id };
     }
 
     throw new ConflictException(
