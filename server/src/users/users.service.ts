@@ -21,7 +21,7 @@ export class UsersService {
 
       const { id } = await this.usersRepository.save(createUserDto);
 
-      return id;
+      return { id };
     } else {
       throw new ConflictException(
         `User '${createUserDto.username}' already exists.`,

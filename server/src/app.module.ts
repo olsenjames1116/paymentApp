@@ -3,9 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
-import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,8 +18,6 @@ import { AuthModule } from './auth/auth.module';
       entities: [User],
       synchronize: true,
     }),
-    UsersModule,
-    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
