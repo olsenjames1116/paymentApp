@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -14,7 +14,7 @@ export class AuthService {
     const user = await this.usersService.findOne(username);
 
     if (!user) {
-      throw new BadRequestException(`User '${username}' does not exist.`);
+      throw new UnauthorizedException(`User '${username}' does not exist.`);
     }
 
     if (await bcrypt.compare(password, user.password)) {
@@ -22,7 +22,7 @@ export class AuthService {
 
       return { id, username };
     } else {
-      throw new BadRequestException('Password is incorrect.');
+      throw new UnauthorizedException('Password is incorrect.');
     }
   }
 

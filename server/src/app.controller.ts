@@ -14,8 +14,8 @@ export class AppController {
   // POST /log-in
   @UseGuards(LocalAuthGuard)
   @Post('log-in')
-  login(@Request() req): Promise<AccessToken> {
-    return this.authService.login(req.user);
+  async login(@Request() req): Promise<AccessToken> {
+    return await this.authService.login(req.user);
   }
 
   @UseGuards(JwtGuard)
