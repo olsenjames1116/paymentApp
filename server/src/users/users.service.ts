@@ -1,8 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
@@ -19,13 +15,9 @@ export class UsersService {
     const user = await this.findOne(createUserDto.username);
 
     if (!user) {
-      bcrypt.hash(createUserDto.password, 10, async (err, hashedPassword) => {
-        if (err) {
-          throw new InternalServerErrorException(err);
-        } else {
-          createUserDto.password = hashedPassword;
-        }
-      });
+      const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+
+      createUserDto = { ...createUserDto, password: hashedPassword };
 
       const { id } = await this.usersRepository.save(createUserDto);
 

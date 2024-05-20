@@ -13,12 +13,15 @@ export class AuthService {
       throw new BadRequestException(`User '${username}' does not exist.`);
     }
 
+    console.log(user);
+
     if (await bcrypt.compare(password, user.password)) {
+      console.log(user);
+      const { id } = user;
+
+      return { id, username };
+    } else {
       throw new BadRequestException('Password is incorrect.');
     }
-
-    const { id } = user;
-
-    return { id, username };
   }
 }
