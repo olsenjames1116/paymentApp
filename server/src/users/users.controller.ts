@@ -26,10 +26,4 @@ export class UsersController {
   findAll() {
     return this.usersService.findAll();
   }
-
-  // GET /users/:id
-  // @Get(':id')
-  // findOne(@Param('', ParseIntPipe) id: number) {
-  //   return this.usersService.findOne(id);
-  // }
 }
