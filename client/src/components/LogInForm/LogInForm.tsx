@@ -91,22 +91,12 @@ function LogInForm() {
 		passwordValidityCheck();
 	};
 
-	// Create a form data object with the user's input.
-	const createFormData: () => FormData = () => {
-		const formData = new FormData();
-		formData.append('username', username);
-		formData.append('password', password);
-
-		return formData;
-	};
-
 	// Log in the user by passing form data to the API.
-	const logIn = () => {
-		const formData = createFormData();
-
+	const logIn = async () => {
 		try {
-			api.post('/log-in', formData);
+			const response = await api.post('/auth/log-in', { username, password });
 
+			sessionStorage.setItem('access_token', response.data.access_token);
 			navigate('/');
 		} catch (error) {
 			console.log(error);
