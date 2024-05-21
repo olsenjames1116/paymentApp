@@ -11,9 +11,7 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, password: string): Promise<any> {
-    console.log(username, password);
     const user = await this.usersService.findOne(username);
-    console.log(user);
 
     if (!user) {
       throw new UnauthorizedException(`User '${username}' does not exist.`);
