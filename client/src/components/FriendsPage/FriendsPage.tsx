@@ -10,7 +10,7 @@ function FriendsPage() {
 		}
 	}, []);
 
-	return <div>FriendsPage</div>;
+	return <div data-testid="friends-page">FriendsPage</div>;
 }
 
 export default FriendsPage;
