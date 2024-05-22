@@ -42,5 +42,5 @@ Cypress.Commands.add('login', () => {
 	cy.get('[data-testid="username-input"]').type('demo');
 	cy.get('[data-testid="password-input"]').type('123');
 
-	cy.get('[data-testid="form-submit-button"]');
+	cy.get('[data-testid="form-submit-button"]').click();
 });
