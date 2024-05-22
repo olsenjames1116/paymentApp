@@ -62,4 +62,6 @@ describe('SignUpPage', () => {
 
 		cy.url().should('match', /\/log-in$/i);
 	});
+
+	it('should navigate the user to the home page if they are logged in.', () => {});
 });
