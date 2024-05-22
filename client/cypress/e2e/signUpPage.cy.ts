@@ -12,13 +12,54 @@ describe('SignUpPage', () => {
 		});
 	});
 
-	// should display an error message if the username is empty.
-	// should display an error message if the username is too long.
-	// should display an error message if a user tries to use an existing username.
-	// should display an error message if the password is empty.
-	// should display an error message if the password is too long.
-	// should display an error message if the confirmation password is empty.
-	// should display an error message if the confirmation password is too long.
-	// should display an error message if the passwords do not match.
-	// should redirect the user to the home page if they are logged in.
+	it('should display an error message if the input is empty.', () => {
+		cy.visit('http://localhost:5173/sign-up');
+
+		cy.get('[data-testid="form-submit-button"]').click();
+
+		cy.get('[data-testid="username-input-invalid-feedback"]')
+			.find('li')
+			.should('have.text', 'Username must not be empty.');
+		cy.get('[data-testid="password-input-invalid-feedback"]')
+			.find('li')
+			.should('have.text', 'Password must not be empty.');
+		cy.get('[data-testid="confirm-password-input-invalid-feedback"]')
+			.find('li')
+			.should('have.text', 'Confirmation password must not be empty.');
+	});
+
+	it('should display an error message if a user tries to use an existing username.', () => {
+		cy.visit('http://localhost:5173/sign-up');
+
+		cy.get('[data-testid="username-input"]').type('demo');
+		cy.get('[data-testid="password-input"]').type('123');
+		cy.get('[data-testid="confirm-password-input"]').type('123');
+		cy.get('[data-testid="form-submit-button"]').click();
+		cy.get('[data-testid="username-input-invalid-feedback"]')
+			.find('li')
+			.should('have.text', "User 'demo' already exists.");
+	});
+
+	it('should display an error message if the passwords do not match.', () => {
+		cy.visit('http://localhost:5173/sign-up');
+
+		cy.get('[data-testid="username-input"]').type('demo');
+		cy.get('[data-testid="password-input"]').type('123');
+		cy.get('[data-testid="confirm-password-input"]').type('456');
+		cy.get('[data-testid="form-submit-button"]').click();
+		cy.get('[data-testid="confirm-password-input-invalid-feedback"]')
+			.find('li')
+			.should('have.text', 'Passwords must match.');
+	});
+
+	it('should redirect the user to the home page if they are logged in.', () => {
+		cy.visit('http://localhost:5173/sign-up');
+
+		cy.get('[data-testid="username-input"]').type('testUser1');
+		cy.get('[data-testid="password-input"]').type('123');
+		cy.get('[data-testid="confirm-password-input"]').type('123');
+		cy.get('[data-testid="form-submit-button"]').click();
+
+		cy.url().should('match', /\/log-in$/i);
+	});
 });
