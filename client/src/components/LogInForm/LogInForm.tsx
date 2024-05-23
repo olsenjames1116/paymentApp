@@ -130,7 +130,7 @@ function LogInForm() {
 			navigate('/');
 		} catch (error) {
 			if (error instanceof AxiosError) {
-				if (error.response?.status === 401) {
+				if (error.response?.status === 400 || error.response?.status === 401) {
 					const { data } = error.response;
 					displayInputServerErrors(data);
 				}
