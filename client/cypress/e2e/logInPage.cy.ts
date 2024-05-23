@@ -3,6 +3,7 @@ describe('LogInPage', () => {
 		cy.login();
 
 		cy.url().should('match', /\/$/);
+		cy.logout();
 	});
 
 	it('should display an error message if the inputs are empty.', () => {
@@ -49,5 +50,6 @@ describe('LogInPage', () => {
 		cy.visit('http://localhost:5173/log-in');
 
 		cy.url().should('match', /\/$/);
+		cy.logout();
 	});
 });

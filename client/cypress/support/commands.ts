@@ -44,3 +44,7 @@ Cypress.Commands.add('login', () => {
 
 	cy.get('[data-testid="form-submit-button"]').click();
 });
+
+Cypress.Commands.add('logout', () => {
+	cy.get('[data-testid="log-out"]').click();
+});
