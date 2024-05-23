@@ -5,5 +5,6 @@ describe('HomePage', () => {
 		cy.wait(500);
 
 		cy.url().should('match', /\/log-in$/);
+		cy.logout();
 	});
 });
