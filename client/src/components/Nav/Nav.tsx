@@ -8,7 +8,7 @@ function Nav() {
 	const location = useSelector((state: IRootState) => state.location.value);
 
 	return (
-		<nav>
+		<nav data-testid="nav">
 			<ul className="nav">
 				<NavItem className={location === '/friends' ? 'active' : ''}>
 					<Link to="/friends">Friends</Link>
