@@ -12,7 +12,7 @@ function Sidebar() {
 				<button>Pay</button>
 			</form>
 			<nav>
-				<ul>
+				<ul className="nav">
 					<li>
 						<Link to="/friends">Friends</Link>
 					</li>

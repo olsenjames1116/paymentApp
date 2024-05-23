@@ -3,11 +3,11 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import TestWrapper from '../../../utils/TestWrapper';
 
-interface FormSubmitButtonProps {
+interface Props {
 	text: string;
 }
 
-const MockFormSubmitButton = ({ text }: FormSubmitButtonProps) => {
+const MockFormSubmitButton = ({ text }: Props) => {
 	return (
 		<TestWrapper>
 			<FormSubmitButton text={text} />

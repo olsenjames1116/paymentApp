@@ -1,4 +1,4 @@
-interface AuthenticationInputProps {
+interface Props {
 	testid: string;
 	inputName: string;
 	label: string;
@@ -16,7 +16,7 @@ function AuthenticationInput({
 	handleChange,
 	invalidFeedback,
 	elementRef,
-}: AuthenticationInputProps) {
+}: Props) {
 	return (
 		<div className="form-floating" data-testid={`${testid}-input-container`}>
 			<input

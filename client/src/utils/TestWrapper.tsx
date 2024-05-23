@@ -3,11 +3,11 @@ import { store } from '../redux/store';
 import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
 
-interface TestWrapperProps {
+interface Props {
 	children: React.ReactNode;
 }
 
-function TestWrapper({ children }: TestWrapperProps) {
+function TestWrapper({ children }: Props) {
 	return (
 		<Provider store={store}>
 			<BrowserRouter>{children}</BrowserRouter>

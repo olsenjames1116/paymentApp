@@ -4,11 +4,11 @@ import '@testing-library/jest-dom';
 import TestWrapper from '../../../utils/TestWrapper';
 import React from 'react';
 
-interface AccountFormContainerProps {
+interface Props {
 	children: React.ReactNode;
 }
 
-const MockAccountFormContainer = ({ children }: AccountFormContainerProps) => {
+const MockAccountFormContainer = ({ children }: Props) => {
 	return (
 		<TestWrapper>
 			<AccountFormContainer children={children} />

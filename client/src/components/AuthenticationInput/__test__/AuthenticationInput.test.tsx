@@ -5,7 +5,7 @@ import TestWrapper from '../../../utils/TestWrapper';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 
-interface AuthenticationInputProps {
+interface Props {
 	testid: string;
 	inputName: string;
 	label: string;
@@ -23,7 +23,7 @@ const MockAuthenticationInput = ({
 	handleChange,
 	invalidFeedback,
 	elementRef,
-}: AuthenticationInputProps) => {
+}: Props) => {
 	return (
 		<TestWrapper>
 			<AuthenticationInput
