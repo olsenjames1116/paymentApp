@@ -1,5 +1,26 @@
+import { useNavigate } from 'react-router-dom';
+
 function LogOut() {
-	return <div data-testid="log-out">LogOut</div>;
+	const navigate = useNavigate();
+
+	const logOut = async (
+		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+	) => {
+		event.preventDefault();
+
+		sessionStorage.removeItem('access_token');
+		navigate('/log-in');
+	};
+
+	return (
+		<button
+			onClick={(event) => logOut(event)}
+			className="btn btn-link"
+			data-testid="log-out"
+		>
+			LogOut
+		</button>
+	);
 }
 
 export default LogOut;
