@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import EditContent from '../EditContent/EditContent';
+import Sidebar from '../Sidebar/Sidebar';
 
 function EditPage() {
 	const navigate = useNavigate();
@@ -10,7 +12,12 @@ function EditPage() {
 		}
 	});
 
-	return <div data-testid="edit-page">EditPage</div>;
+	return (
+		<div data-testid="edit-page">
+			<Sidebar />
+			<EditContent />
+		</div>
+	);
 }
 
 export default EditPage;
