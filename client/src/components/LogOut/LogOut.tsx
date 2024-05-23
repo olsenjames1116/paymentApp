@@ -18,7 +18,7 @@ function LogOut() {
 			className="btn btn-link"
 			data-testid="log-out"
 		>
-			LogOut
+			Log Out
 		</button>
 	);
 }

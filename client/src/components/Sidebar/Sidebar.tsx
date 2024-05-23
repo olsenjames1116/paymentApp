@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import LogOut from '../LogOut/LogOut';
+import NavItem from '../NavItem/NavItem';
 
 function Sidebar() {
 	return (
@@ -13,15 +14,15 @@ function Sidebar() {
 			</form>
 			<nav>
 				<ul className="nav">
-					<li>
+					<NavItem>
 						<Link to="/friends">Friends</Link>
-					</li>
-					<li>
+					</NavItem>
+					<NavItem>
 						<Link to="/">Feed</Link>
-					</li>
-					<li>
+					</NavItem>
+					<NavItem>
 						<LogOut />
-					</li>
+					</NavItem>
 				</ul>
 			</nav>
 		</section>
