@@ -1,15 +1,12 @@
-import { Link } from 'react-router-dom';
-import LogOut from '../LogOut/LogOut';
-import NavItem from '../NavItem/NavItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../redux/store';
 import api from '../../axiosConfig';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { storeUser } from '../../redux/state/userSlice';
 import { User } from '../../../types.ts';
+import Nav from '../Nav/Nav.tsx';
 
 function Sidebar() {
-	const location = useSelector((state: IRootState) => state.location.value);
 	const user: User | object = useSelector(
 		(state: IRootState) => state.user.value
 	);
@@ -38,24 +35,16 @@ function Sidebar() {
 		<section data-testid="sidebar">
 			<h1>SpotMe</h1>
 			<img src="" alt="" />
-			<span>{Object.keys(user).length > 0 && (user as User).username}</span>
-			<span>{Object.keys(user).length > 0 && (user as User).balance}</span>
+			<Suspense fallback={<span>Loading</span>}>
+				<span>{Object.keys(user).length > 0 && (user as User).username}</span>
+			</Suspense>
+			<Suspense fallback={<span>Loading</span>}>
+				<span>{Object.keys(user).length > 0 && (user as User).balance}</span>
+			</Suspense>
 			<form>
 				<button>Pay</button>
 			</form>
-			<nav>
-				<ul className="nav">
-					<NavItem className={location === '/friends' ? 'active' : ''}>
-						<Link to="/friends">Friends</Link>
-					</NavItem>
-					<NavItem className={location === '/' ? 'active' : ''}>
-						<Link to="/">Feed</Link>
-					</NavItem>
-					<NavItem>
-						<LogOut />
-					</NavItem>
-				</ul>
-			</nav>
+			<Nav />
 		</section>
 	);
 }
