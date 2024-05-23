@@ -1,9 +1,10 @@
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 import { IRootState } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { User } from '../../../types';
 import api from '../../axiosConfig';
 import { storeUser } from '../../redux/state/userSlice';
+import { Link } from 'react-router-dom';
 
 function UserData() {
 	const user: User | object = useSelector(
@@ -32,13 +33,11 @@ function UserData() {
 
 	return (
 		<div data-testid="user-data">
-			<img src="" alt="" />
-			<Suspense fallback={<span data-testid="loading">Loading</span>}>
+			<Link to="/edit">
+				<img src="" alt="" />
 				<span>{Object.keys(user).length > 0 && (user as User).username}</span>
-			</Suspense>
-			<Suspense fallback={<span>Loading</span>}>
-				<span>{Object.keys(user).length > 0 && (user as User).balance}</span>
-			</Suspense>
+			</Link>
+			<span>{Object.keys(user).length > 0 && (user as User).balance}</span>
 		</div>
 	);
 }
