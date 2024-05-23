@@ -31,9 +31,9 @@ function UserData() {
 	}, []);
 
 	return (
-		<div>
+		<div data-testid="user-data">
 			<img src="" alt="" />
-			<Suspense fallback={<span>Loading</span>}>
+			<Suspense fallback={<span data-testid="loading">Loading</span>}>
 				<span>{Object.keys(user).length > 0 && (user as User).username}</span>
 			</Suspense>
 			<Suspense fallback={<span>Loading</span>}>
