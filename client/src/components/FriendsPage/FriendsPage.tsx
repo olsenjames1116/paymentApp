@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { storeLocation } from '../../redux/state/locationSlice';
+import Sidebar from '../Sidebar/Sidebar';
 
 function FriendsPage() {
 	const navigate = useNavigate();
@@ -16,7 +17,12 @@ function FriendsPage() {
 		}
 	}, []);
 
-	return <div data-testid="friends-page">FriendsPage</div>;
+	return (
+		<div data-testid="friends-page">
+			<Sidebar />
+			FriendsPage
+		</div>
+	);
 }
 
 export default FriendsPage;

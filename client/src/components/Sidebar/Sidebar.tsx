@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
 import LogOut from '../LogOut/LogOut';
 import NavItem from '../NavItem/NavItem';
+import { useSelector } from 'react-redux';
+import { IRootState } from '../../redux/store';
 
 function Sidebar() {
+	const location = useSelector((state: IRootState) => state.location.value);
+
 	return (
 		<section data-testid="sidebar">
 			<h1>SpotMe</h1>
@@ -14,10 +18,10 @@ function Sidebar() {
 			</form>
 			<nav>
 				<ul className="nav">
-					<NavItem>
+					<NavItem className={location === '/friends' ? 'active' : ''}>
 						<Link to="/friends">Friends</Link>
 					</NavItem>
-					<NavItem>
+					<NavItem className={location === '/' ? 'active' : ''}>
 						<Link to="/">Feed</Link>
 					</NavItem>
 					<NavItem>
