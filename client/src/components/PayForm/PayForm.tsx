@@ -1,6 +1,6 @@
 function PayForm() {
 	return (
-		<form>
+		<form data-testid="pay-form">
 			<button>Pay</button>
 		</form>
 	);
