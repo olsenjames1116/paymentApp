@@ -29,10 +29,6 @@ export class UsersService {
     }
   }
 
-  async findAll() {
-    return await this.usersRepository.find();
-  }
-
   async findOne(username: string) {
     return await this.usersRepository.findOne({
       where: { username: username },

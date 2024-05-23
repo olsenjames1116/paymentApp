@@ -3,12 +3,15 @@ import {
   Controller,
   Get,
   Post,
+  Request,
+  UseGuards,
   UseInterceptors,
   ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { JwtGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -22,8 +25,13 @@ export class UsersController {
   }
 
   // GET /users
+  @UseGuards(JwtGuard)
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  async findOne(@Request() req) {
+    const { username, balance } = await this.usersService.findOne(
+      req.user.username,
+    );
+
+    return { username, balance };
   }
 }

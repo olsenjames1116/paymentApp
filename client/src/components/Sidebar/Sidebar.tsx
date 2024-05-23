@@ -12,8 +12,10 @@ function Sidebar() {
 	useEffect(() => {
 		const getUserInfo = async () => {
 			try {
-				const userInfo = await api.get('/user', {
-					headers: { Authorization: sessionStorage.getItem('access_token') },
+				const userInfo = await api.get('/users', {
+					headers: {
+						Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+					},
 				});
 
 				console.log(userInfo);
