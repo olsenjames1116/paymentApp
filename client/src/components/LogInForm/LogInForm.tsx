@@ -16,6 +16,7 @@ import {
 } from '../../redux/state/invalidUsernameFeedbackSlice';
 import api from '../../axiosConfig';
 import AuthenticationInput from '../AuthenticationInput/AuthenticationInput';
+import { AxiosError } from 'axios';
 
 // Represents the form to log in an existing user.
 function LogInForm() {
@@ -43,6 +44,9 @@ function LogInForm() {
 	const clearFeedback = () => {
 		dispatch(removeInvalidUsernameFeedback());
 		dispatch(removeInvalidPasswordFeedback());
+
+		usernameRef.current?.setCustomValidity('');
+		passwordRef.current?.setCustomValidity('');
 	};
 
 	// Clear all the state for storing user input on initial render.
@@ -91,6 +95,32 @@ function LogInForm() {
 		passwordValidityCheck();
 	};
 
+	// Display meaningful errors to the user from server-side validation.
+	const displayInputServerErrors = (data: { message: string[] | string }) => {
+		let messages;
+
+		if (typeof data.message === 'string') {
+			messages = [data.message];
+		} else {
+			messages = data.message;
+		}
+
+		const usernamePattern = /username|user/i;
+		const passwordPattern = /^Password/;
+
+		messages.map((message: string) => {
+			if (usernamePattern.test(message)) {
+				dispatch(storeInvalidUsernameFeedback(message));
+				usernameRef.current?.setCustomValidity('invalid');
+			}
+
+			if (passwordPattern.test(message)) {
+				dispatch(storeInvalidPasswordFeedback(message));
+				passwordRef.current?.setCustomValidity('invalid');
+			}
+		});
+	};
+
 	// Log in the user by passing form data to the API.
 	const logIn = async () => {
 		try {
@@ -99,6 +129,13 @@ function LogInForm() {
 			sessionStorage.setItem('access_token', response.data.access_token);
 			navigate('/');
 		} catch (error) {
+			if (error instanceof AxiosError) {
+				if (error.response?.status === 401) {
+					const { data } = error.response;
+					displayInputServerErrors(data);
+				}
+			}
+
 			console.log(error);
 		}
 	};

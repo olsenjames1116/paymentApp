@@ -143,6 +143,7 @@ function SignUpForm() {
 		return formData;
 	};
 
+	// Display meaningful errors to the user from server-side validation.
 	const displayInputServerErrors = (data: { message: string[] | string }) => {
 		let messages;
 
@@ -158,19 +159,16 @@ function SignUpForm() {
 
 		messages.map((message: string) => {
 			if (usernamePattern.test(message)) {
-				console.log(`username: ${message}`);
 				dispatch(storeInvalidUsernameFeedback(message));
 				usernameRef.current?.setCustomValidity('invalid');
 			}
 
 			if (passwordPattern.test(message)) {
-				console.log(`password: ${message}`);
 				dispatch(storeInvalidPasswordFeedback(message));
 				passwordRef.current?.setCustomValidity('invalid');
 			}
 
 			if (confirmPasswordPattern.test(message)) {
-				console.log(`confirm: ${message}`);
 				dispatch(storeInvalidConfirmPasswordFeedback(message));
 				confirmPasswordRef.current?.setCustomValidity('invalid');
 			}
@@ -190,7 +188,6 @@ function SignUpForm() {
 		} catch (error) {
 			if (error instanceof AxiosError) {
 				if (error.response?.status === 400 || error.response?.status === 409) {
-					console.log(formData);
 					const { data } = error.response;
 					displayInputServerErrors(data);
 				}
