@@ -9,6 +9,9 @@ export class User {
   username: string;
 
   @Column({ type: 'text' })
+  profile: string;
+
+  @Column({ type: 'text' })
   password: string;
 
   @Column('decimal', {
