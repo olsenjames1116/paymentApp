@@ -28,10 +28,10 @@ export class UsersController {
   @UseGuards(JwtGuard)
   @Get()
   async findOne(@Request() req) {
-    const { username, balance } = await this.usersService.findOne(
+    const { username, balance, pic } = await this.usersService.findOne(
       req.user.username,
     );
 
-    return { username, balance };
+    return { username, balance, pic };
   }
 }
