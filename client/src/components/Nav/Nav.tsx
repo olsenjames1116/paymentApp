@@ -9,7 +9,7 @@ function Nav() {
 
 	return (
 		<nav data-testid="nav">
-			<ul className="nav">
+			<ul className="nav flex-col">
 				<NavItem className={location === '/friends' ? 'active' : ''}>
 					<Link to="/friends">Friends</Link>
 				</NavItem>

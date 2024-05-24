@@ -15,7 +15,7 @@ function LogOut() {
 	return (
 		<button
 			onClick={(event) => logOut(event)}
-			className="btn btn-link"
+			className="btn btn-link p-0"
 			data-testid="log-out"
 		>
 			Log Out
