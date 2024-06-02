@@ -2,10 +2,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import FormSubmitButton from '../FormSubmitButton/FormSubmitButton';
 import { storeImage } from '../../redux/state/imageSlice';
 import { IRootState } from '../../redux/store';
+import { User } from '../../../types';
 
 function EditUserForm() {
 	const image = useSelector((state: IRootState) => state.image.value);
-	// const user = useSelector((state: IRootState) => state.user.value);
+	const user: User | object = useSelector(
+		(state: IRootState) => state.user.value
+	);
 
 	const dispatch = useDispatch();
 
@@ -19,7 +22,7 @@ function EditUserForm() {
 
 	return (
 		<form data-testid="edit-user-form">
-			<img src={image} alt="" className="w-14 h-14" />
+			{image && <img src={image} alt="" className="w-14 h-14" />}
 			<input
 				type="file"
 				className="form-control-md"
@@ -28,7 +31,7 @@ function EditUserForm() {
 			<input
 				type="text"
 				className="form-control"
-				placeholder="hello"
+				placeholder={(user as User).username}
 				disabled
 			/>
 			<input
