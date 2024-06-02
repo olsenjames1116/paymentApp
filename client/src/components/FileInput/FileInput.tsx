@@ -25,8 +25,10 @@ function FileInput({ formRef, setDisabled }: Props) {
 		const { files } = event.target;
 		inputRef.current?.setCustomValidity('');
 
+		// Add Bootstrap class to form.
 		formRef.current?.classList.add('was-validated');
 
+		// Check if there are any files and if they are of type image.
 		if (files) {
 			const imageRegExp = /image/i;
 
