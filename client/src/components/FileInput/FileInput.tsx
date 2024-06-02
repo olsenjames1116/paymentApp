@@ -31,6 +31,7 @@ function FileInput({ formRef, setDisabled }: Props) {
 		// Check if there are any files and if they are of type image.
 		if (files) {
 			const imageRegExp = /image/i;
+			console.log(files);
 
 			if (files.length !== 0 && imageRegExp.test(files[0].type)) {
 				storeInState(files);
@@ -50,8 +51,11 @@ function FileInput({ formRef, setDisabled }: Props) {
 				className="form-control-md"
 				onChange={(event) => validateInput(event)}
 				ref={inputRef}
+				data-testid="file-input"
 			/>
-			<p className="invalid-feedback">File must be an image</p>
+			<p className="invalid-feedback" data-testid="file-input-invalid-feedback">
+				File must be an image
+			</p>
 		</div>
 	);
 }
