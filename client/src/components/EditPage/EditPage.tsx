@@ -10,7 +10,7 @@ function EditPage() {
 		if (sessionStorage.length < 1) {
 			navigate('/log-in');
 		}
-	});
+	}, []);
 
 	return (
 		<div data-testid="edit-page">
