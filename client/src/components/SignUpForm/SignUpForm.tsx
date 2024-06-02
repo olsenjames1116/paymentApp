@@ -262,7 +262,7 @@ function SignUpForm() {
 				invalidFeedback={invalidConfirmPasswordFeedback}
 				elementRef={confirmPasswordRef}
 			/>
-			<FormSubmitButton text="Sign Up" />
+			<FormSubmitButton text="Sign Up" disabled={false} />
 		</form>
 	);
 }

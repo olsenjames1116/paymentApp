@@ -5,26 +5,27 @@ import TestWrapper from '../../../utils/TestWrapper';
 
 interface Props {
 	text: string;
+	disabled: boolean;
 }
 
-const MockFormSubmitButton = ({ text }: Props) => {
+const MockFormSubmitButton = ({ text, disabled }: Props) => {
 	return (
 		<TestWrapper>
-			<FormSubmitButton text={text} />
+			<FormSubmitButton text={text} disabled={disabled} />
 		</TestWrapper>
 	);
 };
 
 describe('FormSubmitButton', () => {
 	it('should render component.', () => {
-		render(<MockFormSubmitButton text="" />);
+		render(<MockFormSubmitButton text="" disabled={false} />);
 		const formSubmitButton = screen.getByTestId('form-submit-button');
 
 		expect(formSubmitButton).toBeInTheDocument();
 	});
 
 	it('should match the text content with the text prop.', () => {
-		render(<MockFormSubmitButton text="Test Button" />);
+		render(<MockFormSubmitButton text="Test Button" disabled={false} />);
 		const formSubmitButton = screen.getByTestId('form-submit-button');
 
 		expect(formSubmitButton).toHaveTextContent(/test button/i);

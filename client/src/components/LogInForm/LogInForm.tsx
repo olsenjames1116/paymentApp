@@ -195,7 +195,7 @@ function LogInForm() {
 				invalidFeedback={invalidPasswordFeedback}
 				elementRef={passwordRef}
 			/>
-			<FormSubmitButton text="Log In" />
+			<FormSubmitButton text="Log In" disabled={false} />
 		</form>
 	);
 }
