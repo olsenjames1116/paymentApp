@@ -30,5 +30,12 @@ describe('FormSubmitButton', () => {
 
 		expect(formSubmitButton).toHaveTextContent(/test button/i);
 	});
+
+	it('should disable the submit button with the disabled prop.', () => {
+		render(<MockFormSubmitButton text="Test Button" disabled={true} />);
+		const formSubmitButton = screen.getByTestId('form-submit-button');
+
+		expect(formSubmitButton).toBeDisabled();
+	});
 });
 FormSubmitButton;
