@@ -4,6 +4,7 @@ import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -33,5 +34,13 @@ export class UsersService {
     return await this.usersRepository.findOne({
       where: { username: username },
     });
+  }
+
+  async update(
+    username: string,
+    pic: Express.Multer.File,
+    { balance }: UpdateUserDto,
+  ) {
+    return { username, pic, balance };
   }
 }

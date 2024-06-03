@@ -3,7 +3,9 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Request,
+  UploadedFile,
   UseGuards,
   UseInterceptors,
   ValidationPipe,
@@ -12,6 +14,8 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtGuard } from 'src/auth/jwt-auth.guard';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { FileTypeValidationPipe } from './validation/file-type';
 
 @Controller('users')
 export class UsersController {
@@ -30,6 +34,24 @@ export class UsersController {
   async findOne(@Request() req) {
     const { username, balance, pic } = await this.usersService.findOne(
       req.user.username,
+    );
+
+    return { username, balance, pic };
+  }
+
+  @UseGuards(JwtGuard)
+  @Put()
+  @UseInterceptors(FileInterceptor('pic'))
+  async update(
+    @Request() req,
+    @UploadedFile(FileTypeValidationPipe)
+    profilePic: Express.Multer.File,
+    @Body(ValidationPipe) updateUserDto: UpdateUserDto,
+  ) {
+    const { username, pic, balance } = await this.usersService.update(
+      req.user.username,
+      profilePic,
+      updateUserDto,
     );
 
     return { username, balance, pic };

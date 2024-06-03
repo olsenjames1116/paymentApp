@@ -16,10 +16,17 @@ function EditUserForm() {
 
 	const [disabled, setDisabled] = useState(false);
 
+	const instanceOfUser = (user: object): user is User => {
+		return 'balance' in user;
+	};
+
 	const createFormData: () => FormData = () => {
 		const formData = new FormData();
-		formData.append('image', image);
 
+		if (instanceOfUser(user)) {
+			formData.append('pic', image);
+			formData.append('balance', `${user.balance}`);
+		}
 		return formData;
 	};
 
@@ -50,7 +57,7 @@ function EditUserForm() {
 			<input
 				type="text"
 				className="form-control"
-				placeholder={(user as User).username}
+				placeholder={instanceOfUser(user) ? user.username : 'username'}
 				disabled
 			/>
 			<input
