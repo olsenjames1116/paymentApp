@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { uploadFile } from '../../aws-s3';
 
 @Injectable()
 export class UsersService {
@@ -41,6 +42,8 @@ export class UsersService {
     pic: Express.Multer.File,
     { balance }: UpdateUserDto,
   ) {
-    return { username, pic, balance };
+    const { Location } = await uploadFile(pic);
+
+    return { username, pic: Location, balance };
   }
 }
