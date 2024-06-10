@@ -5,19 +5,21 @@ import { useRef } from 'react';
 
 interface Props {
 	formRef: React.RefObject<HTMLFormElement>;
+	setImageFile: React.Dispatch<React.SetStateAction<null | File>>;
 	setDisabled: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function FileInput({ formRef, setDisabled }: Props) {
+function FileInput({ formRef, setImageFile, setDisabled }: Props) {
 	const image = useSelector((state: IRootState) => state.image.value);
 
-	const dispatch = useDispatch();
-
 	const inputRef = useRef<HTMLInputElement>(null);
+
+	const dispatch = useDispatch();
 
 	// Store the image in state.
 	const storeInState = (files: FileList) => {
 		dispatch(storeImage(URL.createObjectURL(files[0])));
+		setImageFile(files[0]);
 	};
 
 	// Validate the file.
@@ -31,7 +33,6 @@ function FileInput({ formRef, setDisabled }: Props) {
 		// Check if there are any files and if they are of type image.
 		if (files) {
 			const imageRegExp = /image/i;
-			console.log(files);
 
 			if (files.length !== 0 && imageRegExp.test(files[0].type)) {
 				storeInState(files);

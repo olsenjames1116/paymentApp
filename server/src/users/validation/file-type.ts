@@ -2,11 +2,13 @@ import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
 
 @Injectable()
 export class FileTypeValidationPipe implements PipeTransform {
-  transform(value: Express.Multer.File) {
+  transform(pic: Express.Multer.File) {
     const imageRegex = /image/i;
 
-    if (imageRegex.test(value.mimetype)) {
-      return value;
+    console.log(pic);
+
+    if (imageRegex.test(pic.mimetype)) {
+      return pic;
     } else {
       throw new BadRequestException('File must be of type image');
     }
