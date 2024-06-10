@@ -9,6 +9,7 @@ interface Props {
 	setDisabled: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+// Represents the file input field on the edit user page.
 function FileInput({ formRef, setImageFile, setDisabled }: Props) {
 	const image = useSelector((state: IRootState) => state.image.value);
 
@@ -18,8 +19,8 @@ function FileInput({ formRef, setImageFile, setDisabled }: Props) {
 
 	// Store the image in state.
 	const storeInState = (files: FileList) => {
-		dispatch(storeImage(URL.createObjectURL(files[0])));
 		setImageFile(files[0]);
+		dispatch(storeImage(URL.createObjectURL(files[0])));
 	};
 
 	// Validate the file.

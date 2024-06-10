@@ -6,6 +6,7 @@ import FileInput from '../FileInput/FileInput';
 import { useRef, useState } from 'react';
 import api from '../../axiosConfig';
 
+// Represents the form which the user can update their information.
 function EditUserForm() {
 	const [imageFile, setImageFile] = useState<null | File>(null);
 
@@ -17,10 +18,12 @@ function EditUserForm() {
 
 	const [disabled, setDisabled] = useState(false);
 
+	// Check if a value is an instance of type user.
 	const instanceOfUser = (user: object): user is User => {
 		return 'balance' in user;
 	};
 
+	// Create form data to send to API.
 	const createFormData: () => FormData = () => {
 		const formData = new FormData();
 
@@ -34,11 +37,10 @@ function EditUserForm() {
 		return formData;
 	};
 
+	// Submit changes made by the user on the form to API.
 	const submitChanges = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const formData = createFormData();
-
-		console.log(formData.get('pic'));
 
 		try {
 			const user = await api.put('/users', formData, {
