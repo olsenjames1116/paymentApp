@@ -8,7 +8,6 @@ import invalidConfirmPasswordFeedbackReducer from './state/invalidConfirmPasswor
 import locationReducer from './state/locationSlice';
 import userReducer from './state/userSlice';
 import imageReducer from './state/imageSlice';
-import imageFileReducer from './state/imageFileSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -21,7 +20,6 @@ export const store = configureStore({
 		location: locationReducer,
 		user: userReducer,
 		image: imageReducer,
-		imageFile: imageFileReducer,
 	},
 });
 
