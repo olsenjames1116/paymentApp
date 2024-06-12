@@ -39,11 +39,20 @@ export class UsersService {
 
   async update(
     username: string,
-    pic: Express.Multer.File,
+    profilePic: Express.Multer.File,
     { balance }: UpdateUserDto,
   ) {
-    const { Location } = await uploadFile(pic);
+    const { Location } = await uploadFile(profilePic);
 
-    return { username, pic: Location, balance };
+    const user = await this.findOne(username);
+    user.balance = Number(balance);
+    user.pic = Location;
+    const updatedUser = await this.usersRepository.save(user);
+
+    return {
+      username: updatedUser.username,
+      pic: updatedUser.pic,
+      balance: updatedUser.balance,
+    };
   }
 }
