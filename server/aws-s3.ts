@@ -44,11 +44,12 @@ async function s3_upload(
   }
 }
 
-export async function downloadFile(key: string) {
-  const downloadParams = {
-    Key: key,
-    Bucket: process.env.AWS_BUCKET_NAME,
-  };
+export async function deleteFile(id: string) {
+  const params = { Bucket: process.env.AWS_BUCKET_NAME, Key: id };
 
-  return s3.getObject(downloadParams).createReadStream();
+  try {
+    return s3.deleteObject(params).promise();
+  } catch (error) {
+    console.log(error);
+  }
 }

@@ -17,7 +17,7 @@ function EditUserForm() {
 
 	const formRef = useRef<HTMLFormElement>(null);
 
-	const [disabled, setDisabled] = useState(false);
+	const [disabled, setDisabled] = useState(true);
 
 	const dispatch = useDispatch();
 
@@ -35,7 +35,6 @@ function EditUserForm() {
 			if (imageFile instanceof File) {
 				formData.append('pic', imageFile);
 			}
-			formData.append('balance', `${user.balance}`);
 		}
 		return formData;
 	};
@@ -46,7 +45,7 @@ function EditUserForm() {
 		const formData = createFormData();
 
 		try {
-			const response = await api.put('/users', formData, {
+			const response = await api.put('/users/account-info', formData, {
 				headers: {
 					Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
 				},

@@ -14,7 +14,6 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtGuard } from 'src/auth/jwt-auth.guard';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { FileTypeValidationPipe } from './validation/file-type';
 
 @Controller('users')
@@ -40,18 +39,16 @@ export class UsersController {
   }
 
   @UseGuards(JwtGuard)
-  @Put()
+  @Put('account-info')
   @UseInterceptors(FileInterceptor('pic'))
-  async update(
+  async updatePic(
     @Request() req,
     @UploadedFile(FileTypeValidationPipe)
     profilePic: Express.Multer.File,
-    @Body(ValidationPipe) updateUserDto: UpdateUserDto,
   ) {
-    const { username, pic, balance } = await this.usersService.update(
+    const { username, pic, balance } = await this.usersService.updatePic(
       req.user.username,
       profilePic,
-      updateUserDto,
     );
 
     return { username, balance, pic };

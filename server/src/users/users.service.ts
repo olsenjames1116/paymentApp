@@ -4,8 +4,7 @@ import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { uploadFile } from '../../aws-s3';
+import { deleteFile, uploadFile } from '../../aws-s3';
 
 @Injectable()
 export class UsersService {
@@ -37,22 +36,28 @@ export class UsersService {
     });
   }
 
-  async update(
-    username: string,
-    profilePic: Express.Multer.File,
-    { balance }: UpdateUserDto,
-  ) {
+  async updatePic(username: string, profilePic: Express.Multer.File) {
     const { Location } = await uploadFile(profilePic);
 
     const user = await this.findOne(username);
-    user.balance = Number(balance);
-    user.pic = Location;
-    const updatedUser = await this.usersRepository.save(user);
+    const url = new URL(user.pic);
 
-    return {
-      username: updatedUser.username,
-      pic: updatedUser.pic,
-      balance: updatedUser.balance,
-    };
+    user.pic = Location;
+
+    try {
+      const updatedUser = await this.usersRepository.save(user);
+
+      await deleteFile(url.pathname.slice(1));
+
+      return {
+        username: updatedUser.username,
+        pic: updatedUser.pic,
+        balance: updatedUser.balance,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+
+    return user;
   }
 }
