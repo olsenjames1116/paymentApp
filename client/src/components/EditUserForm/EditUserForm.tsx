@@ -1,10 +1,11 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FormSubmitButton from '../FormSubmitButton/FormSubmitButton';
 import { IRootState } from '../../redux/store';
 import { User } from '../../../types';
 import FileInput from '../FileInput/FileInput';
 import { useRef, useState } from 'react';
 import api from '../../axiosConfig';
+import { storeUser } from '../../redux/state/userSlice';
 
 // Represents the form which the user can update their information.
 function EditUserForm() {
@@ -17,6 +18,8 @@ function EditUserForm() {
 	const formRef = useRef<HTMLFormElement>(null);
 
 	const [disabled, setDisabled] = useState(false);
+
+	const dispatch = useDispatch();
 
 	// Check if a value is an instance of type user.
 	const instanceOfUser = (user: object): user is User => {
@@ -43,13 +46,13 @@ function EditUserForm() {
 		const formData = createFormData();
 
 		try {
-			const user = await api.put('/users', formData, {
+			const response = await api.put('/users', formData, {
 				headers: {
 					Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
 				},
 			});
 
-			console.log(user);
+			dispatch(storeUser(response.data));
 		} catch (error) {
 			console.log(error);
 		}
