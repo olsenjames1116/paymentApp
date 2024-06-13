@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   Put,
   Request,
@@ -38,6 +39,14 @@ export class UsersController {
     return { username, balance, pic };
   }
 
+  //GET /users/:username
+  // @UseGuards(JwtGuard)
+  @Get(':username')
+  async find(@Param('username') username: string) {
+    return await this.usersService.find(username);
+  }
+
+  // PUT /users/account-info
   @UseGuards(JwtGuard)
   @Put('account-info')
   @UseInterceptors(FileInterceptor('pic'))

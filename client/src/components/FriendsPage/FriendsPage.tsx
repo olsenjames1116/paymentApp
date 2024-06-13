@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { storeLocation } from '../../redux/state/locationSlice';
 import Sidebar from '../Sidebar/Sidebar';
+import FriendsContent from '../FriendsContent/FriendsContent';
 
 // Represents the page to view a user's friends.
 function FriendsPage() {
@@ -21,7 +22,7 @@ function FriendsPage() {
 	return (
 		<div data-testid="friends-page">
 			<Sidebar />
-			FriendsPage
+			<FriendsContent />
 		</div>
 	);
 }

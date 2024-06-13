@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { deleteFile, uploadFile } from '../../aws-s3';
@@ -33,6 +33,13 @@ export class UsersService {
   async findOne(username: string) {
     return await this.usersRepository.findOne({
       where: { username: username },
+    });
+  }
+
+  async find(username: string) {
+    return await this.usersRepository.find({
+      select: { username: true, pic: true },
+      where: { username: ILike(`%${username}%`) },
     });
   }
 

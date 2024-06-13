@@ -1,7 +1,7 @@
 function PayForm() {
 	return (
 		<form onSubmit={(event) => event.preventDefault()} data-testid="pay-form">
-			<button className="btn btn-primary">Pay</button>
+			<button className="btn btn-primary">💸 Pay 💸</button>
 		</form>
 	);
 }
