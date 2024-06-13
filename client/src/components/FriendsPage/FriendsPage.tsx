@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { storeLocation } from '../../redux/state/locationSlice';
 import Sidebar from '../Sidebar/Sidebar';
 
+// Represents the page to view a user's friends.
 function FriendsPage() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
