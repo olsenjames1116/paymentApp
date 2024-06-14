@@ -239,6 +239,7 @@ function SignUpForm() {
 			ref={formRef}
 		>
 			<AuthenticationInput
+				type="text"
 				inputName="username"
 				testid="username"
 				label="Username"
@@ -247,6 +248,7 @@ function SignUpForm() {
 				elementRef={usernameRef}
 			/>
 			<AuthenticationInput
+				type="password"
 				inputName="password"
 				testid="password"
 				label="Password"
@@ -255,6 +257,7 @@ function SignUpForm() {
 				elementRef={passwordRef}
 			/>
 			<AuthenticationInput
+				type="password"
 				inputName="confirmPassword"
 				testid="confirm-password"
 				label="Confirmation Password"

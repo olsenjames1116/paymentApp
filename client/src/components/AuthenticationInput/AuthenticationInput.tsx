@@ -1,4 +1,5 @@
 interface Props {
+	type: string;
 	testid: string;
 	inputName: string;
 	label: string;
@@ -10,6 +11,7 @@ interface Props {
 /* Represents an input for username, password and confirmation password on
 log in and sign up pageXOffset. */
 function AuthenticationInput({
+	type,
 	inputName,
 	testid,
 	label,
@@ -20,7 +22,7 @@ function AuthenticationInput({
 	return (
 		<div className="form-floating" data-testid={`${testid}-input-container`}>
 			<input
-				type={inputName}
+				type={type}
 				name={inputName}
 				id={inputName}
 				data-testid={`${testid}-input`}

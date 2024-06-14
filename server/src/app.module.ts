@@ -7,6 +7,7 @@ import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { FriendshipModule } from './friendship/friendship.module';
+import { Friendship } from './friendship/friendship.entity';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { FriendshipModule } from './friendship/friendship.module';
       username: process.env.POSTGRES_USERNAME,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [User],
+      entities: [User, Friendship],
       synchronize: true,
     }),
     UsersModule,
