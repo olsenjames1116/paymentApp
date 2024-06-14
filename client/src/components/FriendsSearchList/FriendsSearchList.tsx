@@ -16,7 +16,15 @@ function FriendsSearchList() {
 		event.preventDefault();
 
 		try {
-			const response = await api.post('/friendship', { id });
+			const response = await api.post(
+				'/friendship',
+				{ id },
+				{
+					headers: {
+						Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+					},
+				}
+			);
 
 			console.log(response);
 		} catch (error) {

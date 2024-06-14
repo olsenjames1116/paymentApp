@@ -3,8 +3,8 @@ import { CreateFriendshipDto } from './dto/create-friendship.dto';
 
 @Injectable()
 export class FriendshipService {
-  async create(createFriendshipDto: CreateFriendshipDto) {
-    console.log(createFriendshipDto);
+  async create(id: string, createFriendshipDto: CreateFriendshipDto) {
+    console.log(id, createFriendshipDto);
     return 'post friendship';
   }
 }
