@@ -3,3 +3,7 @@ export interface User {
 	balance: number;
 	pic: string | null;
 }
+
+export interface Friend extends User {
+	id: string;
+}

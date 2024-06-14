@@ -38,7 +38,7 @@ export class UsersService {
 
   async find(username: string) {
     return await this.usersRepository.find({
-      select: { username: true, pic: true },
+      select: { username: true, pic: true, id: true },
       where: { username: ILike(`%${username}%`) },
     });
   }

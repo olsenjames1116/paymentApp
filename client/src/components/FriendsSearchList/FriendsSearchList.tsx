@@ -1,21 +1,24 @@
 import { useSelector } from 'react-redux';
 import { IRootState } from '../../redux/store';
-import { User } from '../../../types';
+import { Friend } from '../../../types';
 import moneyImage from '../../images/money.jpg';
+import api from '../../axiosConfig';
 
 function FriendsSearchList() {
 	const friendsSearchResult = useSelector(
 		(state: IRootState) => state.friendsSearchResult.value
 	);
 
-	const addFriend = (
+	const addFriend = async (
 		event: React.FormEvent<HTMLFormElement>,
-		username: string
+		id: string
 	) => {
 		event.preventDefault();
 
 		try {
-			console.log(username);
+			const response = await api.post('/friendship', { id });
+
+			console.log(response);
 		} catch (error) {
 			console.log(error);
 		}
@@ -23,16 +26,16 @@ function FriendsSearchList() {
 
 	return (
 		<ul>
-			{friendsSearchResult.map((result: User) => {
+			{friendsSearchResult.map((result: Friend) => {
 				return (
-					<li>
+					<li key={result.id}>
 						{result.pic ? (
 							<img src={result.pic} alt="" />
 						) : (
 							<img src={moneyImage} />
 						)}
 						<span>{result.username}</span>
-						<form onSubmit={(event) => addFriend(event, result.username)}>
+						<form onSubmit={(event) => addFriend(event, result.id)}>
 							<button className="btn btn-primary">+ Add</button>
 						</form>
 					</li>
