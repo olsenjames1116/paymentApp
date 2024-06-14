@@ -1,13 +1,23 @@
+import { useDispatch } from 'react-redux';
 import api from '../../axiosConfig';
+import {
+	removeFriendsSearchResult,
+	storeFriendsSearchResult,
+} from '../../redux/state/friendsSearchResultSlice';
 
+// Represents the search bar on the friends page.
 function FriendsSearchBar() {
+	const dispatch = useDispatch();
+
 	const searchUsers = async (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = event.target;
+
+		if (value === '') dispatch(removeFriendsSearchResult());
 
 		try {
 			const response = await api.get(`/users/${value}`);
 
-			console.log(response);
+			dispatch(storeFriendsSearchResult(response.data));
 		} catch (error) {
 			console.log(error);
 		}

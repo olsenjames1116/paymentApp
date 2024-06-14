@@ -8,6 +8,7 @@ import invalidConfirmPasswordFeedbackReducer from './state/invalidConfirmPasswor
 import locationReducer from './state/locationSlice';
 import userReducer from './state/userSlice';
 import imageReducer from './state/imageSlice';
+import friendsSearchResultReducer from './state/friendsSearchResultSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
 		location: locationReducer,
 		user: userReducer,
 		image: imageReducer,
+		friendsSearchResult: friendsSearchResultReducer,
 	},
 });
 
